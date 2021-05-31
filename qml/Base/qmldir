@@ -1,0 +1,5 @@
+module Base
+BaseControlButton 1.0 BaseControlButton.qml
+BaseText            1.0 BaseText.qml
+BaseButtonGradient  1.0 BaseButtonGradient.qml
+
