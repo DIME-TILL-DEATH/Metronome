@@ -37,12 +37,14 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     MusicalPatternModel::registerMe("Pattern");
+
     // перенести регистрацию класса(или нет?)
     qmlRegisterUncreatableType<MusicalNote>("MusicalNoteModule", 1, 0,
                                             "MusicalNote",
                                             "Error: Only for enums!"); // Зарегистрировать данный класс в качестве мета объекта
 
     engine.addImportPath(":/qml");  // добавляем базовую директорию qml в пути импорта
+
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
