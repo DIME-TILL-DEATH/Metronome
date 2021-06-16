@@ -1,14 +1,14 @@
-import QtQuick 2.0
+import QtQuick 2.10
 import QtQuick.Layouts 1.15
 import QtGraphicalEffects 1.0
 import ResourceProvider 1.0
 
-import MusicalNoteModule 1.0
+import MusicalTypesModule 1.0
 
 Item {
     id: root
 
-    opacity:  _delegateArea.pressed ? 0.5                                   : 0.8
+    opacity:  _delegateArea.pressed ? 0.5 : 1
 
     MouseArea{
         id: _delegateArea
@@ -33,13 +33,11 @@ Item {
 
                 source: {
                     switch(Number(type)){
-                        case MusicalNote.Quarter : return Resources.musicalSymbols.quarterNoteIcon
-                        case MusicalNote.Eight: return Resources.musicalSymbols.eightNoteIcon
+                        case MusicalTypes.Quarter : return Resources.musicalSymbols.quarterNoteIcon
+                        case MusicalTypes.Eight: return Resources.musicalSymbols.eightNoteIcon
                         default: return Resources.musicalSymbols.quarterNoteIcon
                     }
                 }
-//                sourceSize.height: height
-//                sourceSize.width: width
                 cache: true
             }
 
@@ -55,13 +53,12 @@ Item {
             text: line1
             color: "lightBlue"
             horizontalAlignment: Text.AlignHCenter
-            anchors.horizontalCenter: parent.horizontalCenter
         }
+
         Text{
             text: line2
             color: "lightBlue"
             horizontalAlignment: Text.AlignHCenter
-            anchors.horizontalCenter: parent.horizontalCenter
         }
     }
 }

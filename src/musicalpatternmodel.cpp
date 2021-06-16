@@ -6,16 +6,17 @@ MusicalPatternModel::MusicalPatternModel(QObject *parent)
     : QAbstractListModel(parent)
 {
     m_pattern = {
-        {MusicalNote::NoteType::Eight, "L", "F"},
-        {MusicalNote::NoteType::Quarter, "R", " "},
-        {MusicalNote::NoteType::Eight, "L", " "},
-        {MusicalNote::NoteType::Quarter, "R", " "}
+        {MusicalTypes::NoteType::Eight, "L", "F"},
+        {MusicalTypes::NoteType::Quarter, "R", " "},
+        {MusicalTypes::NoteType::Eight, "L", " "},
+        {MusicalTypes::NoteType::Quarter, "R", " "}
     };
 }
 
-void MusicalPatternModel::registerMe(const std::string &moduleName)
+MusicalPatternModel::MusicalPatternModel(std::vector<MusicalNote> pattern, QObject *parent)
+                    : MusicalPatternModel(parent)
 {
-    qmlRegisterType<MusicalPatternModel>(moduleName.c_str(), 1, 0, "MusicalPatternModel");
+    m_pattern = pattern;
 }
 
 QHash<int, QByteArray> MusicalPatternModel::roleNames() const

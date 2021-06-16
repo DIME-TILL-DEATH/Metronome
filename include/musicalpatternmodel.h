@@ -13,15 +13,16 @@ class MusicalPatternModel : public QAbstractListModel
     Q_OBJECT
 public:
     explicit MusicalPatternModel(QObject *parent = nullptr);
+    MusicalPatternModel(std::vector<MusicalNote> pattern, QObject *parent = nullptr);
 
-    static void registerMe(const std::string &moduleName);
+//    static void registerMe(const std::string &moduleName);
 
     QHash<int, QByteArray> roleNames() const override;
     int rowCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex& index = {}, int role = Qt::DisplayRole) const override;
 
 private:
-    QList<MusicalNote> m_pattern;
+    std::vector<MusicalNote> m_pattern;
 
     enum PatternRoles{
         TypeRole = Qt::UserRole + 1,

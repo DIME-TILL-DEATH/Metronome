@@ -5,7 +5,6 @@
         <file>Sounds/Metronomes/metronome.wav</file>
         <file>Sounds/Metronomes/metronomeAcc.wav</file>
         <file>qml/Base/qmldir</file>
-        <file>qml/Base/BaseText.qml</file>
         <file>qml/Views/qmldir</file>
         <file>qml/Views/PatternView.qml</file>
         <file>qml/Pages/MainPage.qml</file>
@@ -13,7 +12,6 @@
         <file>qml/Pages/qmldir</file>
         <file>qml/main.qml</file>
         <file>qtquickcontrols2.conf</file>
-        <file>qml/Base/BaseButtonGradient.qml</file>
         <file>qml/Views/MetronomeButtonsView.qml</file>
         <file>qml/Views/PatternDelegate.qml</file>
         <file>qml/Base/BaseControlButton.qml</file>
@@ -120,5 +118,9 @@
         <file>qml/Resources/MusicalSymbols/whole-1.svg</file>
         <file>qml/Resources/MusicalSymbols/whole-rest.svg</file>
         <file>qml/Resources/MusicalSymbols/whole.svg</file>
+        <file>qml/Base/BaseSpinBox.qml</file>
+        <file>qml/StyleSettings/qmldir</file>
+        <file>qml/StyleSettings/Style.qml</file>
+        <file>qml/Base/AnimatedGradient.qml</file>
     </qresource>
 </RCC>

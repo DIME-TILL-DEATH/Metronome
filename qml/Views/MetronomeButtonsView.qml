@@ -1,6 +1,8 @@
 import QtQuick 2.10
 import QtQuick.Controls 2.15
+
 import Base 1.0
+import StyleSettings 1.0
 
 Item {
     id: _rootRectangle
@@ -32,16 +34,37 @@ Item {
             displayText: "00s"
         }
 
-        BaseControlButton {
-            id: _btnTempo
-            isWide: true
-            displayText: "120"
+        BaseSpinBox{
+            from: 10
+            to: 300
+            value: Metronome.tempo()
+
+            onValueChanged: {
+                Metronome.tempoChanged(value)
+            }
         }
 
         BaseControlButton {
             id: _btnPlayStop
             isWide: true
-            displayText: "PLAY"
+
+            contentItem: Text{
+                id: _btnPlayStopText
+
+                //  todo: Заменить на картинку!!! >
+                font.pointSize: 25
+                text: "PLAY"
+                color: _btnPlayStop.down ? Style.textColorPressed
+                                         : Style.textColorMain
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+
+            onClicked: {
+                Metronome.playStopButtonClick()
+                _btnPlayStopText.text = Metronome.isPlaying() ? "STOP" : "PLAY"
+            }
         }
 
         BaseControlButton {

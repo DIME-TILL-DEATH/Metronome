@@ -1,11 +1,10 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.3
 
-// Имя зарегистрированого в C++ модуля
-import Pattern 1.0
-
 Item {
     id: _rootRectangle
+
+    property var patternModel
 
     width: parent.width
     height: parent.height*0.3
@@ -20,7 +19,6 @@ Item {
         id: column
         spacing: 5
         anchors.fill: parent
-
         clip: true
 
         Label{
@@ -45,11 +43,15 @@ Item {
 
         ListView{
             id: _listView
+
             orientation: ListView.Horizontal
+            flickableDirection: Flickable.AutoFlickIfNeeded
+            boundsBehavior: Flickable.StopAtBounds
+
             width: parent.width
             height: parent.height
 
-            model: MusicalPatternModel{}
+            model: patternModel
 
             delegate: PatternDelegate{
                 width: 50

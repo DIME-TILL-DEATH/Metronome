@@ -1,11 +1,11 @@
 #include "musicalnote.h"
 
-MusicalNote::MusicalNote(NoteType type)
+MusicalNote::MusicalNote(MusicalTypes::NoteType type)
     : m_type(type)
 {
 }
 
-MusicalNote::MusicalNote(NoteType type, QString line1, QString line2)
+MusicalNote::MusicalNote(MusicalTypes::NoteType type, QString line1, QString line2)
     : m_type(type),
       m_line1(line1),
       m_line2(line2)
@@ -13,7 +13,7 @@ MusicalNote::MusicalNote(NoteType type, QString line1, QString line2)
 
 }
 
-MusicalNote::NoteType MusicalNote::type() const
+const MusicalTypes::NoteType &MusicalNote::type() const
 {
     return m_type;
 }
@@ -27,3 +27,4 @@ const QString &MusicalNote::line2() const
 {
     return m_line2;
 }
+

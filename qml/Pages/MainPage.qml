@@ -3,12 +3,15 @@ import QtQuick.Controls 2.3
 
 import Views 1.0
 import Base 1.0
+import StyleSettings 1.0
 import ResourceProvider 1.0
 
 Page {
+    id: _page
+
     background: Rectangle{
         z: -100
-        gradient: BaseButtonGradient{}
+        gradient: Style.buttonGradient
     }
 
     header: Rectangle {
@@ -35,6 +38,8 @@ Page {
             icon.source: Resources.interfaceElements.menuIcon
             icon.height: parent.height * 0.4
             icon.width: parent.height * 0.4
+
+
         }
 
         Text {
@@ -52,12 +57,12 @@ Page {
 
         PatternView{
             id: _patternview1
-
+            patternModel: mainPattern
         }
 
         PatternView{
             id: _patternview2
-
+            patternModel: secondaryPattern
         }
 
         MetronomeButtonsView{

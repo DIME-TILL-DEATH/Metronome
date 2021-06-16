@@ -11,9 +11,13 @@ ApplicationWindow {
     visible: true
     title: qsTr("Metronome")
 
+
     SwipeView {
         id: _swipeView
         anchors.fill: parent
+        interactive: false
+
+
 
         MainPage {
 

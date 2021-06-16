@@ -3,15 +3,21 @@ QT += multimedia
 
 CONFIG += c++11
 
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+INCLUDEPATH += $$PWD/include
+
+HEADERS += \
+    include/musicaltypes.h \
+    include/metronome.h \
+    include/metronomepreset.h \
+    include/musicalnote.h \
+    include/musicalpatternmodel.h
 
 SOURCES += \
         main.cpp \
-        metronomepreset.cpp \
-        musicalnote.cpp \
-        musicalpatternmodel.cpp
+        src/metronome.cpp \
+        src/metronomepreset.cpp \
+        src/musicalnote.cpp \
+        src/musicalpatternmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -27,8 +33,5 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-HEADERS += \
-    metronomepreset.h \
-    musicalnote.h \
-    musicalpatternmodel.h
+
 

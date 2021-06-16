@@ -9,6 +9,8 @@
 #include "musicalpatternmodel.h"
 #include "musicalnote.h"
 
+#include "metronome.h"
+
 int main(int argc, char *argv[])
 {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -16,41 +18,32 @@ int main(int argc, char *argv[])
 #endif
 
     QGuiApplication app(argc, argv);
-
-    //------------------------------
-    // попробовать QAudioOutput вместо QSoundEffect
-    QSoundEffect baseSound;
-    baseSound.setSource(QUrl::fromLocalFile("://Sounds/Metronomes/metronome.wav"));
-   // baseSound.setLoopCount(QSoundEffect::Infinite);
-   // baseSound.setVolume(0.25f);
-   // baseSound.play();
-
-    QTimer mainTimer;
-    mainTimer.setTimerType(Qt::PreciseTimer);
-    mainTimer.setInterval(60*1000/120);
-    mainTimer.start();
-
-    QObject::connect(&mainTimer, &QTimer::timeout, &baseSound, &QSoundEffect::play);
-
-    //-----------------------------
-
     QQmlApplicationEngine engine;
+//------------------------------------------------------------------
+    // Singletone
+    Metronome& metronome{Metronome::instance()};
+    engine.rootContext()->setContextProperty("Metronome", &metronome);
+    engine.rootContext()->setContextProperty("mainPattern", &metronome.activePreset().mainPattern());
+    engine.rootContext()->setContextProperty("secondaryPattern", &metronome.activePreset().secondaryPattern());
 
-    MusicalPatternModel::registerMe("Pattern");
+//    qmlRegisterSingletonInstance("SingletoneMetronome", 1, 0, "Metronome", &metronome);
+//    MusicalPatternModel::registerMe("CoreApplicationModule");
 
     // перенести регистрацию класса(или нет?)
-    qmlRegisterUncreatableType<MusicalNote>("MusicalNoteModule", 1, 0,
-                                            "MusicalNote",
+    qmlRegisterUncreatableType<MusicalTypes>("MusicalTypesModule", 1, 0,
+                                            "MusicalTypes",
                                             "Error: Only for enums!"); // Зарегистрировать данный класс в качестве мета объекта
 
-    engine.addImportPath(":/qml");  // добавляем базовую директорию qml в пути импорта
-
+//---------------------------------------------------------------------
+    engine.addImportPath(":/qml");
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
+
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
+
     engine.load(url);
 
     return app.exec();
