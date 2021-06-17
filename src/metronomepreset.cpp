@@ -46,7 +46,37 @@ quint16 MetronomePreset::tempo() const
     return m_tempo;
 }
 
-const MusicalTypes::TimeIntervals &MetronomePreset::timeIntervals() const
+MetronomePreset::NextNote MetronomePreset::proceedNextNote()
 {
-    return m_timeIntervals;
+    MusicalNote note = m_mainPattern.proceedNextNote();
+    MetronomePreset::NextNote returnValue;
+
+    // Убого!!!!
+    switch(note.type())
+    {
+        case MusicalTypes::NoteType::Quarter:
+        {
+            returnValue.timeInterval = m_timeIntervals.Quarter;
+            break;
+        }
+        case MusicalTypes::NoteType::Eight:
+        {
+            returnValue.timeInterval = m_timeIntervals.Eight;
+            break;
+        }
+        default:
+        {
+            returnValue.timeInterval = m_timeIntervals.Quarter;
+            break;
+        }
+    }
+
+    returnValue.isFirstBarNote = false;
+
+    return returnValue;
 }
+
+//const MusicalTypes::TimeIntervals &MetronomePreset::timeIntervals() const
+//{
+//    return m_timeIntervals;
+//}

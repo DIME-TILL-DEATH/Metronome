@@ -10,17 +10,6 @@ class MusicalNote
 {
     Q_GADGET
 public:
-
-//    enum class NoteType{
-//        Whole,
-//        Half,
-//        Quarter,
-//        Eight,
-//        Sixteenth,
-//        Thirty_second
-//    };
-//    Q_ENUM(NoteType)
-
     MusicalNote(MusicalTypes::NoteType type = MusicalTypes::NoteType::Quarter);
     MusicalNote(MusicalTypes::NoteType type, QString line1, QString line2);
 
@@ -29,12 +18,11 @@ public:
 
     const MusicalTypes::NoteType &type() const;
 
+//    bool isPlaying {false};
 private:
     MusicalTypes::NoteType m_type;
     QString m_line1;
     QString m_line2;
 };
-
-//Q_DECLARE_METATYPE(MusicalNote::NoteType)
 
 #endif // MUSICALNOTE_H

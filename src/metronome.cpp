@@ -7,10 +7,10 @@ Metronome::Metronome(QObject *parent) : QObject(parent)
     baseSound.setSource(QUrl::fromLocalFile("://Sounds/Metronomes/metronome.wav"));
     baseSound.setVolume(0.25f);
 
-    mainTimer.setTimerType(Qt::PreciseTimer);
-    mainTimer.setInterval(60*1000/120);
+    mainPatternTimer.setTimerType(Qt::PreciseTimer);
+    mainPatternTimer.setInterval(60*1000/120);
 
-    connect(&mainTimer, &QTimer::timeout, this, &Metronome::mainTimerEvent);
+    connect(&mainPatternTimer, &QTimer::timeout, this, &Metronome::mainPatternTimerEvent);
 }
 
 Metronome &Metronome::instance()
@@ -24,10 +24,13 @@ MetronomePreset &Metronome::activePreset()
     return m_activePreset;
 }
 
-void Metronome::mainTimerEvent()
+void Metronome::mainPatternTimerEvent()
 {
     baseSound.play();
-    mainTimer.setInterval(m_activePreset.timeIntervals().Quarter);
+
+    MetronomePreset::NextNote nextNote = m_activePreset.proceedNextNote();
+    mainPatternTimer.setInterval(nextNote.timeInterval);
+
 }
 
 quint16 Metronome::tempo()
@@ -35,21 +38,23 @@ quint16 Metronome::tempo()
     return m_activePreset.tempo();
 }
 
-bool Metronome::isPlaying()
+bool Metronome::isMetronomePlaying()
 {
-    return mainTimer.isActive();
+    return mainPatternTimer.isActive();
 }
 
 void Metronome::playStopButtonClick()
 {
-    if(mainTimer.isActive())
+    if(mainPatternTimer.isActive())
     {
-        mainTimer.stop();
+        mainPatternTimer.stop();
     }
     else
     {
-       mainTimer.start();
+       mainPatternTimer.start();
     }
+
+    emit isMetronomePlayingChanged();
 }
 
 void Metronome::tempoChanged(quint16 tempo)

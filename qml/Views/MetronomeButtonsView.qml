@@ -53,9 +53,12 @@ Item {
 
                 //  todo: Заменить на картинку!!! >
                 font.pointSize: 25
-                text: "PLAY"
+
+                text: Metronome.isMetronomePlaying ? "STOP" : "PLAY"
+
                 color: _btnPlayStop.down ? Style.textColorPressed
                                          : Style.textColorMain
+
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
@@ -63,7 +66,7 @@ Item {
 
             onClicked: {
                 Metronome.playStopButtonClick()
-                _btnPlayStopText.text = Metronome.isPlaying() ? "STOP" : "PLAY"
+
             }
         }
 

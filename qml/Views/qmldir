@@ -1,4 +1,5 @@
 module Views
+BarDelegate          1.0 BarDelegate.qml
 PatternView          1.0 PatternView.qml
 PatternDelegate      1.0 PatternDelegate.qml
 MetronomeButtonsView 1.0 MetronomeButtonsView.qml

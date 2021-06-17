@@ -52,11 +52,7 @@ Item {
             height: parent.height
 
             model: patternModel
-
-            delegate: PatternDelegate{
-                width: 50
-                height: parent.height
-            }
+            delegate: PatternDelegate{}
         }
     }
 }

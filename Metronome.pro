@@ -6,6 +6,7 @@ CONFIG += c++11
 INCLUDEPATH += $$PWD/include
 
 HEADERS += \
+    include/musicalbarmodel.h \
     include/musicaltypes.h \
     include/metronome.h \
     include/metronomepreset.h \
@@ -16,6 +17,7 @@ SOURCES += \
         main.cpp \
         src/metronome.cpp \
         src/metronomepreset.cpp \
+        src/musicalbarmodel.cpp \
         src/musicalnote.cpp \
         src/musicalpatternmodel.cpp
 

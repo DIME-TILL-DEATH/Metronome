@@ -122,5 +122,6 @@
         <file>qml/StyleSettings/qmldir</file>
         <file>qml/StyleSettings/Style.qml</file>
         <file>qml/Base/AnimatedGradient.qml</file>
+        <file>qml/Views/BarDelegate.qml</file>
     </qresource>
 </RCC>

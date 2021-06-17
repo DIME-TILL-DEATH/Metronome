@@ -7,27 +7,28 @@
 #include <QHash>
 
 #include "musicalnote.h"
+#include "musicalbarmodel.h"
 
 class MusicalPatternModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
     explicit MusicalPatternModel(QObject *parent = nullptr);
-    MusicalPatternModel(std::vector<MusicalNote> pattern, QObject *parent = nullptr);
-
-//    static void registerMe(const std::string &moduleName);
+    MusicalPatternModel(std::vector<MusicalBarModel*> barPattern, QObject *parent = nullptr);
 
     QHash<int, QByteArray> roleNames() const override;
     int rowCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex& index = {}, int role = Qt::DisplayRole) const override;
 
+    MusicalNote proceedNextNote();
 private:
-    std::vector<MusicalNote> m_pattern;
+    std::vector<MusicalBarModel*> m_barPattern;
+    quint16 m_activeBarIndex{0};
 
     enum PatternRoles{
-        TypeRole = Qt::UserRole + 1,
-        Line1Role,
-        Line2Role
+        BarModelRole= Qt::UserRole + 1,
+        BarNumberRole,
+        isActiveBarRole
     };
 };
 

@@ -1,64 +1,46 @@
 import QtQuick 2.10
 import QtQuick.Layouts 1.15
-import QtGraphicalEffects 1.0
-import ResourceProvider 1.0
 
 import MusicalTypesModule 1.0
+import StyleSettings 1.0
 
 Item {
-    id: root
+    id: _root
 
-    opacity:  _delegateArea.pressed ? 0.5 : 1
+    width: _listView.count * 50
+    height: parent.height
 
-    MouseArea{
-        id: _delegateArea
-        anchors.fill: root
+    Rectangle{
+        id: _barLine
+        color: Style.imagesColorOverlay
+        x:0; y:0
+        width: 2
+        height: parent.height / 2
+    }
+    Text{
+        x: _barLine.width + 5
+        color: Style.textColorMain
+        font.pointSize: 10
+        text: barNumber
     }
 
-    ColumnLayout{
-        spacing: 5
+    ListView{
+        id: _listView
 
-        Rectangle {
-            id: _imageNote
+        orientation: ListView.Horizontal
+        flickableDirection: Flickable.AutoFlickIfNeeded
+        boundsBehavior: Flickable.StopAtBounds
 
-            height: root.width
-            width: root.width
+        width: _root.width
+        height: _root.height
 
-            property alias image: _internalImage
-            color: "transparent"
 
-            Image{
-                id: _internalImage
-                anchors.fill: _imageNote
+        model: barModel
 
-                source: {
-                    switch(Number(type)){
-                        case MusicalTypes.Quarter : return Resources.musicalSymbols.quarterNoteIcon
-                        case MusicalTypes.Eight: return Resources.musicalSymbols.eightNoteIcon
-                        default: return Resources.musicalSymbols.quarterNoteIcon
-                    }
-                }
-                cache: true
-            }
-
-            ColorOverlay{
-                anchors.fill: _internalImage
-                source: _imageNote.image
-                color:  "royalblue"
-                antialiasing: true
-            }
-        }
-
-        Text{
-            text: line1
-            color: "lightBlue"
-            horizontalAlignment: Text.AlignHCenter
-        }
-
-        Text{
-            text: line2
-            color: "lightBlue"
-            horizontalAlignment: Text.AlignHCenter
+        delegate: BarDelegate{
+            id: _note
+            width: 50
+            height: _listView.height
         }
     }
 }

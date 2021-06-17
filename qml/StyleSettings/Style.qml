@@ -12,6 +12,10 @@ QtObject {
     readonly property color btnGradientTop: "grey"
     readonly property color btnGradientBtm: "black"
 
+    readonly property color imagesColorOverlay: "dodgerblue"
+    readonly property color imagesColorOverlayHighlighted: "lightskyblue"
+    readonly property color imagesColorOverlayPlaying: "lightsteelblue"
+
     readonly property Gradient buttonGradient: Gradient{
         GradientStop{ position: 0.0; color: "grey"}
         GradientStop{ position: 1.0; color: "black"}

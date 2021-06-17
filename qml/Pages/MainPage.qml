@@ -39,7 +39,10 @@ Page {
             icon.height: parent.height * 0.4
             icon.width: parent.height * 0.4
 
-
+            onClicked: {
+                // working, but disabled for future use
+//                 _page.SwipeView.view.incrementCurrentIndex()
+            }
         }
 
         Text {
