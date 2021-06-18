@@ -6,12 +6,9 @@ MusicalBarModel::MusicalBarModel(QObject *parent)
     // default fill for debug(mock)
     m_notePattern = {
         {MusicalTypes::NoteType::Quarter, "R", " "},
-        {MusicalTypes::NoteType::Eight, "R", " "},
-        {MusicalTypes::NoteType::Eight, "L", "F"},
         {MusicalTypes::NoteType::Quarter, "R", " "},
-        {MusicalTypes::NoteType::Eight, "L", " "},
-        {MusicalTypes::NoteType::Eight, "L", "F"}
-
+        {MusicalTypes::NoteType::Quarter, "R", " "},
+        {MusicalTypes::NoteType::Quarter, "R", " "}
     };
 }
 
@@ -73,20 +70,6 @@ QVariant MusicalBarModel::data(const QModelIndex &index, int role) const
 
 std::pair<MusicalNote, int> MusicalBarModel::proceedNextNote()
 {
-//    emit beginResetModel();
-
-//    // Тоже как-то убого
-//    if(nowPlayingNoteIndex>0)
-//    {
-//        m_notePattern.at(nowPlayingNoteIndex-1).isPlaying = false;
-//    }
-//    else
-//    {
-//       m_notePattern.at(m_notePattern.size()-1).isPlaying = false;
-//    }
-//    m_notePattern.at(nowPlayingNoteIndex).isPlaying = true;
-
-    // сделать пару со вторым аргументом показывающим что это последняя нота такта?
     MusicalNote tempNote = m_notePattern.at(m_activeNoteIndex);
     int noteRole=0;
 
@@ -101,7 +84,6 @@ std::pair<MusicalNote, int> MusicalBarModel::proceedNextNote()
         noteRole=0;
     }
 
-//    emit endResetModel();
     emit dataChanged(createIndex(0, 0), createIndex(m_notePattern.size()-1, 0), {PatternRoles::isActiveNoteRole});
 
     return std::make_pair(tempNote, noteRole);

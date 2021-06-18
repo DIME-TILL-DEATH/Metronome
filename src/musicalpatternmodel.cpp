@@ -7,10 +7,12 @@ MusicalPatternModel::MusicalPatternModel(QObject *parent)
 {
     static MusicalBarModel tempBar1(parent);
     static MusicalBarModel tempBar2(parent);
-//            ({{MusicalTypes::NoteType::Quarter, "L", "F"},
-//                                     {MusicalTypes::NoteType::Quarter, "L", " "},
-//                                     {MusicalTypes::NoteType::Quarter, "L", " "},
-//                                     {MusicalTypes::NoteType::Quarter, "R", " "}}, parent);
+//            ({{MusicalTypes::NoteType::Quarter, "R", " "},
+//    {MusicalTypes::NoteType::Eight, "R", " "},
+//    {MusicalTypes::NoteType::Eight, "L", "F"},
+//    {MusicalTypes::NoteType::Quarter, "R", " "},
+//    {MusicalTypes::NoteType::Eight, "L", " "},
+//    {MusicalTypes::NoteType::Eight, "L", "F"}}, parent);
     static MusicalBarModel tempBar3(parent);
 
     m_barPattern = {

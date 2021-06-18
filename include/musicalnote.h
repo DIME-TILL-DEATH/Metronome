@@ -17,8 +17,6 @@ public:
     const QString &line2() const;
 
     const MusicalTypes::NoteType &type() const;
-
-//    bool isPlaying {false};
 private:
     MusicalTypes::NoteType m_type;
     QString m_line1;

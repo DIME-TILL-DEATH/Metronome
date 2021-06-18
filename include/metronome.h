@@ -3,10 +3,12 @@
 
 #include <QObject>
 #include <QTimer>
+#include <QElapsedTimer>
 #include <QSoundEffect>
 #include <QAudioOutput>
 
 #include "metronomepreset.h"
+#include "timersthread.h"
 
 class Metronome : public QObject
 {
@@ -21,7 +23,7 @@ public:
 
     bool isMetronomePlaying();
 
-    // пеерписать чтоб вытаскивало модель наружу и сделать invokable
+    // переписать чтоб вытаскивало модель наружу и сделать invokable
     MetronomePreset &activePreset();
 
     // Methods for UI
@@ -29,12 +31,14 @@ public:
     Q_INVOKABLE quint16 tempo();
 private:
     Metronome(QObject *parent = nullptr);
+    ~Metronome();
+
+
+    TimersThread timersThread;
 
     MetronomePreset m_activePreset;
 
-    QTimer mainPatternTimer; //pattern 1 timer
-    // TODO: list of timers for each type of sounde BEHIND the pattern itself
-    // (i a e triplet, 2nd pattern), all sounds that you can add by the mixer
+    QElapsedTimer elapsedTimer;
     QTimer practiceTimer;
 
     QSoundEffect baseSound;
