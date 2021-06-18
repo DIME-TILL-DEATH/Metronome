@@ -24,11 +24,11 @@ public:
     bool isMetronomePlaying();
 
     // переписать чтоб вытаскивало модель наружу и сделать invokable
-    MetronomePreset &activePreset();
 
     // Methods for UI
     // переделать на property
     Q_INVOKABLE quint16 tempo();
+    Q_INVOKABLE MusicalPatternModel &pattern(quint16 id=0);
 private:
     Metronome(QObject *parent = nullptr);
     ~Metronome();

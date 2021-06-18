@@ -3,17 +3,18 @@
 
 MetronomePreset::MetronomePreset()
 {
-
+    m_patterns.push_back(new MusicalPatternModel);
+    m_patterns.push_back(new MusicalPatternModel);
 }
 
-MusicalPatternModel &MetronomePreset::mainPattern()
+MusicalPatternModel &MetronomePreset::pattern(quint16 id)
 {
-    return m_mainPattern;
-}
-
-MusicalPatternModel &MetronomePreset::secondaryPattern()
-{
-    return m_secondaryPattern;
+    if(id > m_patterns.size()-1)
+    {
+        qWarning() << "Pattern with id: " << id << " doesn't exist! Returning pattern with id 0";
+        return *m_patterns.at(0); // ну такое. Надо что-то поумнее
+    }
+    return *m_patterns.at(id);
 }
 
 bool MetronomePreset::setTempo(quint16 tempo)
@@ -46,9 +47,15 @@ quint16 MetronomePreset::tempo() const
     return m_tempo;
 }
 
-MetronomePreset::NextNote MetronomePreset::proceedNextNote()
+MetronomePreset::NextNote MetronomePreset::proceedNextNote(quint16 patternId)
 {
-    MusicalNote note = m_mainPattern.proceedNextNote();
+    if(patternId > m_patterns.size()-1)
+    {
+        qWarning() << "Pattern with id: " << patternId << " doesn't exist!";
+        return {100, 0}; // ну такое. Надо что-то поумнее
+    }
+
+    MusicalNote note = m_patterns.at(patternId)->proceedNextNote();
     MetronomePreset::NextNote returnValue;
 
     // Убого!!!!

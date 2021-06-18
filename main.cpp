@@ -23,8 +23,8 @@ int main(int argc, char *argv[])
     // Singletone
     Metronome& metronome{Metronome::instance()};
     engine.rootContext()->setContextProperty("Metronome", &metronome);
-    engine.rootContext()->setContextProperty("mainPattern", &metronome.activePreset().mainPattern());
-    engine.rootContext()->setContextProperty("secondaryPattern", &metronome.activePreset().secondaryPattern());
+    engine.rootContext()->setContextProperty("mainPattern", &metronome.pattern(0));
+    engine.rootContext()->setContextProperty("secondaryPattern", &metronome.pattern(1));
 
 //    qmlRegisterSingletonInstance("SingletoneMetronome", 1, 0, "Metronome", &metronome);
 //    MusicalPatternModel::registerMe("CoreApplicationModule");

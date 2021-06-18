@@ -65,7 +65,7 @@ Page {
 
         PatternView{
             id: _patternview2
-            patternModel: secondaryPattern
+            patternModel: Metronome.pattern(1)
         }
 
         MetronomeButtonsView{

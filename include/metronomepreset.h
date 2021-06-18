@@ -11,8 +11,7 @@ class MetronomePreset
 public:
     MetronomePreset();
 
-    MusicalPatternModel &mainPattern();
-    MusicalPatternModel &secondaryPattern();
+    MusicalPatternModel& pattern(quint16 id=0);
 
     bool setTempo(quint16 tempo);
     quint16 tempo() const;
@@ -23,7 +22,7 @@ public:
         bool isFirstBarNote;
     };
 
-    NextNote proceedNextNote();
+    NextNote proceedNextNote(quint16 patternId=0);
 //    const MusicalTypes::TimeIntervals &timeIntervals() const;
 
 private:
@@ -32,8 +31,7 @@ private:
 
     quint16 m_nowPosition{0};
 
-    MusicalPatternModel m_mainPattern;
-    MusicalPatternModel m_secondaryPattern;
+    std::vector<MusicalPatternModel*> m_patterns;
 };
 
 #endif // METRONOMEPRESET_H

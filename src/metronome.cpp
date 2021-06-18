@@ -26,9 +26,9 @@ Metronome &Metronome::instance()
     return instance;
 }
 
-MetronomePreset &Metronome::activePreset()
+MusicalPatternModel &Metronome::pattern(quint16 id)
 {
-    return m_activePreset;
+    return m_activePreset.pattern(id);
 }
 
 void Metronome::mainPatternTimerEvent()

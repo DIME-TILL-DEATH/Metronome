@@ -1,5 +1,6 @@
 import QtQuick 2.10
 import QtQuick.Layouts 1.15
+import QtQuick.Controls 2.3
 import QtGraphicalEffects 1.0
 import ResourceProvider 1.0
 
@@ -15,7 +16,53 @@ Item {
     MouseArea{
         id: _delegateArea
         anchors.fill: root
+
+        pressAndHoldInterval: 500
+        onPressAndHold: {
+            _menu.popup()
+        }
     }
+
+    Menu{
+      id: _menu
+      closePolicy: Popup.CloseOnPressOutside | Popup.CloseOnEscape
+
+      width: {
+          var result = 0;
+          var padding = 0;
+          for (var i = 0; i < count; ++i) {
+              var item = itemAt(i);
+              result = Math.max(item.contentItem.implicitWidth, result);
+              padding = Math.max(item.padding, padding);
+          }
+          return result + padding * 2;
+      }
+
+      Menu {
+          title:  "Add"
+          width: parent.width
+              MenuItem {
+                  text:  "before"
+              }
+              MenuItem {
+                  text:  "after"
+              }
+      }
+      MenuItem {
+          text:  "Edit"
+      }
+      MenuItem {
+          text:  "Remove"
+      }
+
+      enter: Transition {
+              ParallelAnimation {
+                  NumberAnimation { property: "height"; from: 0; to: _menu.height; duration: 200 }
+                  NumberAnimation { property: "width"; from: 0; to: _menu.width; duration: 200 }
+              }
+          }
+    }
+
 
     ColumnLayout{
         x:5

@@ -9,12 +9,6 @@ Item {
     width: parent.width
     height: parent.height*0.3
 
-    MouseArea{
-        id: _delegateArea
-        anchors.fill: _rootRectangle
-    }
-
-
     Column{
         id: column
         spacing: 5
@@ -52,7 +46,9 @@ Item {
             height: parent.height
 
             model: patternModel
-            delegate: PatternDelegate{}
+            delegate: PatternDelegate{
+
+            }
         }
     }
 }
