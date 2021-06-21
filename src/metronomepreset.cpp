@@ -47,7 +47,7 @@ quint16 MetronomePreset::tempo() const
     return m_tempo;
 }
 
-MetronomePreset::NextNote MetronomePreset::proceedNextNote(quint16 patternId)
+MetronomePreset::NextNote MetronomePreset::popNote(quint16 patternId)
 {
     if(patternId > m_patterns.size()-1)
     {
@@ -55,7 +55,7 @@ MetronomePreset::NextNote MetronomePreset::proceedNextNote(quint16 patternId)
         return {100, 0}; // ну такое. Надо что-то поумнее
     }
 
-    MusicalNote note = m_patterns.at(patternId)->proceedNextNote();
+    MusicalNote note = m_patterns.at(patternId)->popNote();
     MetronomePreset::NextNote returnValue;
 
     // Убого!!!!

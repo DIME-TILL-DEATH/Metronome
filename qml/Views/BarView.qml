@@ -7,7 +7,7 @@ import StyleSettings 1.0
 Item {
     id: _root
 
-    width: _listView.count * 50
+    width: _barView.count * 50
     height: parent.height
 
     Rectangle{
@@ -25,7 +25,7 @@ Item {
     }
 
     ListView{
-        id: _listView
+        id: _barView
 
         orientation: ListView.Horizontal
         flickableDirection: Flickable.AutoFlickIfNeeded
@@ -37,7 +37,7 @@ Item {
 
         model: barModel
 
-        delegate: BarDelegate{
+        delegate: NoteView{
             id: _note
             width: 50
             height: _listView.height

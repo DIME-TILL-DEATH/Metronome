@@ -68,7 +68,7 @@ QVariant MusicalBarModel::data(const QModelIndex &index, int role) const
     }
 }
 
-std::pair<MusicalNote, int> MusicalBarModel::proceedNextNote()
+std::pair<MusicalNote, int> MusicalBarModel::popNote()
 {
     MusicalNote tempNote = m_notePattern.at(m_activeNoteIndex);
     int noteRole=0;
@@ -83,7 +83,6 @@ std::pair<MusicalNote, int> MusicalBarModel::proceedNextNote()
         m_activeNoteIndex++;
         noteRole=0;
     }
-
     emit dataChanged(createIndex(0, 0), createIndex(m_notePattern.size()-1, 0), {PatternRoles::isActiveNoteRole});
 
     return std::make_pair(tempNote, noteRole);

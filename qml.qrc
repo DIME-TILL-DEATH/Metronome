@@ -13,7 +13,7 @@
         <file>qml/main.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>qml/Views/MetronomeButtonsView.qml</file>
-        <file>qml/Views/PatternDelegate.qml</file>
+        <file>qml/Views/BarView.qml</file>
         <file>qml/Base/BaseControlButton.qml</file>
         <file>qml/ResourceProvider/qmldir</file>
         <file>qml/ResourceProvider/Resources.qml</file>
@@ -122,6 +122,6 @@
         <file>qml/StyleSettings/qmldir</file>
         <file>qml/StyleSettings/Style.qml</file>
         <file>qml/Base/AnimatedGradient.qml</file>
-        <file>qml/Views/BarDelegate.qml</file>
+        <file>qml/Views/NoteViewer/NoteView.qml</file>
     </qresource>
 </RCC>

@@ -12,7 +12,8 @@ HEADERS += \
     include/metronomepreset.h \
     include/musicalnote.h \
     include/musicalpatternmodel.h \
-    include/timersthread.h
+    include/soundengine.h \
+    include/timersengine.h
 
 SOURCES += \
         main.cpp \
@@ -21,7 +22,8 @@ SOURCES += \
         src/musicalbarmodel.cpp \
         src/musicalnote.cpp \
         src/musicalpatternmodel.cpp \
-        src/timersthread.cpp
+        src/soundengine.cpp \
+        src/timersengine.cpp
 
 RESOURCES += qml.qrc
 

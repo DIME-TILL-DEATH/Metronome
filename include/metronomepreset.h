@@ -22,7 +22,7 @@ public:
         bool isFirstBarNote;
     };
 
-    NextNote proceedNextNote(quint16 patternId=0);
+    NextNote popNote(quint16 patternId=0);
 //    const MusicalTypes::TimeIntervals &timeIntervals() const;
 
 private:

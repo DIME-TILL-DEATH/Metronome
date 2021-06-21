@@ -20,7 +20,7 @@ public:
     QVariant data(const QModelIndex& index = {}, int role = Qt::DisplayRole) const override;
 
     //TODO: подумать какие роли, кроме последней могут быть у второго значения(normal, last, invalid?), заменить int на структуру
-    std::pair<MusicalNote, int> proceedNextNote();
+    std::pair<MusicalNote, int> popNote();
 private:
     std::vector<MusicalNote> m_notePattern;
     std::pair<quint8, MusicalTypes::NoteType> m_timeSignature {4, MusicalTypes::NoteType::Quarter};

@@ -49,6 +49,19 @@ Item {
               }
       }
       MenuItem {
+          text:  "Copy"
+      }
+      Menu {
+          title:  "Paste"
+          width: parent.width
+              MenuItem {
+                  text:  "before"
+              }
+              MenuItem {
+                  text:  "after"
+              }
+      }
+      MenuItem {
           text:  "Edit"
       }
       MenuItem {
@@ -58,7 +71,6 @@ Item {
       enter: Transition {
               ParallelAnimation {
                   NumberAnimation { property: "height"; from: 0; to: _menu.height; duration: 200 }
-                  NumberAnimation { property: "width"; from: 0; to: _menu.width; duration: 200 }
               }
           }
     }

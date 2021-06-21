@@ -74,12 +74,12 @@ QVariant MusicalPatternModel::data(const QModelIndex &index, int role) const
     }
 }
 
-MusicalNote MusicalPatternModel::proceedNextNote()
+MusicalNote MusicalPatternModel::popNote()
 {
     // TODO: проверка размера такта, если нота была последняя, увеличить m_activeBar
     // и уже после запускать proceedNextNote
 
-    std::pair<MusicalNote, int> activeNote = m_barPattern.at(m_activeBarIndex)->proceedNextNote();
+    std::pair<MusicalNote, int> activeNote = m_barPattern.at(m_activeBarIndex)->popNote();
 
     if(activeNote.second == 1)
     {

@@ -20,7 +20,7 @@ public:
     int rowCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex& index = {}, int role = Qt::DisplayRole) const override;
 
-    MusicalNote proceedNextNote();
+    MusicalNote popNote();
 private:
     std::vector<MusicalBarModel*> m_barPattern;
     quint16 m_activeBarIndex{0};

@@ -3,12 +3,11 @@
 
 #include <QObject>
 #include <QTimer>
-#include <QElapsedTimer>
-#include <QSoundEffect>
-#include <QAudioOutput>
+#include <QThread>
 
 #include "metronomepreset.h"
-#include "timersthread.h"
+#include "timersengine.h"
+#include "soundengine.h"
 
 class Metronome : public QObject
 {
@@ -23,34 +22,38 @@ public:
 
     bool isMetronomePlaying();
 
-    // переписать чтоб вытаскивало модель наружу и сделать invokable
-
     // Methods for UI
-    // переделать на property
-    Q_INVOKABLE quint16 tempo();
+    Q_INVOKABLE quint16 tempo();// переделать на property
     Q_INVOKABLE MusicalPatternModel &pattern(quint16 id=0);
+
 private:
     Metronome(QObject *parent = nullptr);
     ~Metronome();
 
 
-    TimersThread timersThread;
+    TimersEngine* timersEngine;
+    SoundEngine* soundEngine;
+    QThread* timersThread;
+    QThread* soundThread;
 
     MetronomePreset m_activePreset;
 
-    QElapsedTimer elapsedTimer;
     QTimer practiceTimer;
-
-    QSoundEffect baseSound;
 
 signals:
     void isMetronomePlayingChanged();
 
+    // передавать std::map или аналог с интервалами соответствующими следующей ноте
+    void setTimerNextInterval(quint16 interval);
+    void startStopPlaying();
+
 public slots:
+    // заменить на timerEvent, принимать id таймера у которого произошёл таймаут, в соотвтествии
+    // с ним извлекать ноту из нужного паттерна
+    // или ничего не делать, если это событие базового метронома, а не паттерна
     void mainPatternTimerEvent();
     void playStopButtonClick();
     void tempoChanged(quint16 tempo);
-
 };
 
 #endif // METRONOME_H

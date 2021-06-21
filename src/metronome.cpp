@@ -4,20 +4,35 @@
 
 Metronome::Metronome(QObject *parent) : QObject(parent)
 {
-    baseSound.setSource(QUrl::fromLocalFile("://Sounds/Metronomes/metronome.wav"));
-    baseSound.setVolume(0.25f);
+    timersThread = new QThread();
+    timersEngine = new TimersEngine();
+    soundThread = new QThread();
+    soundEngine = new SoundEngine();
 
-    connect(&timersThread, &TimersThread::mainPatternTimerTimout,
+    connect(timersEngine, &TimersEngine::mainPatternTimerTimout,
             this, &Metronome::mainPatternTimerEvent);
-//    connect(this, &Metronome::isMetronomePlayingChanged,
-//            &timersThread, &TimersThread::startStopCounting);
+    connect(timersEngine, &TimersEngine::mainPatternTimerTimout,
+            soundEngine, &SoundEngine::playMetronomeSound);
+    connect(timersEngine, &TimersEngine::isMetronomePlayingChanged,
+            this, &Metronome::isMetronomePlayingChanged);
 
-    timersThread.start(QThread::Priority::TimeCriticalPriority);
+    connect(this, &Metronome::startStopPlaying,
+            timersEngine, &TimersEngine::startStopCounting, Qt::QueuedConnection);
+    connect(this, &Metronome::setTimerNextInterval,
+            timersEngine, &TimersEngine::setNextInterval, Qt::QueuedConnection);
+
+
+    timersEngine->moveToThread(timersThread);
+    timersThread->start(QThread::Priority::TimeCriticalPriority);
+
+    soundEngine->moveToThread(soundThread);
+    soundThread->start(QThread::Priority::TimeCriticalPriority);
 }
 
 Metronome::~Metronome()
 {
-    timersThread.quit();
+    timersThread->quit();
+    soundThread->quit();
 }
 
 Metronome &Metronome::instance()
@@ -33,12 +48,8 @@ MusicalPatternModel &Metronome::pattern(quint16 id)
 
 void Metronome::mainPatternTimerEvent()
 {
-//    qDebug() << "Time between clicks: " << elapsedTimer.elapsed();
-//    elapsedTimer.start();
-    baseSound.play();
-
-    MetronomePreset::NextNote nextNote = m_activePreset.proceedNextNote();
-    timersThread.setNextInterval(nextNote.timeInterval);
+//    MetronomePreset::NextNote nextNote = m_activePreset.popNote();
+    emit setTimerNextInterval(m_activePreset.popNote().timeInterval);
 }
 
 quint16 Metronome::tempo()
@@ -48,13 +59,15 @@ quint16 Metronome::tempo()
 
 bool Metronome::isMetronomePlaying()
 {
-    return timersThread.isTimersCounting();
+    // TODO: переписать так, чтобы timersEngine можно было
+    // не делать членом Metronome
+    return timersEngine->isTimersCounting();
 }
 
 void Metronome::playStopButtonClick()
 {
-    timersThread.startStopCounting();
-    emit isMetronomePlayingChanged();
+    emit startStopPlaying();
+//    emit setTimerNextInterval(m_activePreset.popNote().timeInterval);
 }
 
 void Metronome::tempoChanged(quint16 tempo)
