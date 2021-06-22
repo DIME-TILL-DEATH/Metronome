@@ -19,13 +19,15 @@ public:
     int rowCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex& index = {}, int role = Qt::DisplayRole) const override;
 
-    //TODO: подумать какие роли, кроме последней могут быть у второго значения(normal, last, invalid?), заменить int на структуру
-    std::pair<MusicalNote, int> popNote();
+
+//    std::pair<MusicalNote, int> popNote();
+
+    const std::vector<MusicalNote> &notePattern() const;
 private:
     std::vector<MusicalNote> m_notePattern;
     std::pair<quint8, MusicalTypes::NoteType> m_timeSignature {4, MusicalTypes::NoteType::Quarter};
 
-    quint16 m_activeNoteIndex{0};
+    quint16 m_selectedNoteIndex{0};
 
     enum PatternRoles{
         TypeRole = Qt::UserRole + 1,

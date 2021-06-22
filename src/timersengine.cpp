@@ -21,19 +21,28 @@ void TimersEngine::setNextInterval(quint16 newNextInterval)
     m_nextInterval = newNextInterval;
 }
 
+void TimersEngine::setPatternTimeIntervals(const std::vector<quint16>& patternTimeIntervals)
+{
+    m_patternTimeIntervals = patternTimeIntervals;
+}
+
 void TimersEngine::processMainPatternTimerTimeout()
 {
 //        qDebug() << "Time between clicks: " << elapsedTimer.elapsed();
 //        elapsedTimer.start();
-        emit mainPatternTimerTimout();
-
-    // при нажатии кнопки Play(или, в будущем, редактирования "на ходу")
-    // передавать вектор с набором интервалов таймера и играть по нему.
-    // не использовать "pop note" и прочее вытаскивание "наверх" ноты.
-    // отображение проигрывания ноты сделать не на основе роли ноты,
-    // а на основе индекса по вектору интервалов через класс Metronome
-    // ***а индекс в "role" оставить для "select" ради редактирования или старта проигрывания
-        mainPatternTimer.setInterval(m_nextInterval);
+        if(m_countingPosition >= m_patternTimeIntervals.size()-1)
+        {
+            m_countingPosition = 0;
+        }
+        else
+        {
+            m_countingPosition++;
+        }
+        emit mainPatternTimerTimout(m_countingPosition);
+        mainPatternTimer.setInterval(m_patternTimeIntervals.at(m_countingPosition));
+        // отображение проигрывания ноты сделать не на основе роли ноты,
+        // а на основе индекса по вектору интервалов через класс Metronome
+        // ***а индекс в "role" оставить для "select" ради редактирования или старта проигрывания
 }
 
 void TimersEngine::startStopCounting()
@@ -44,7 +53,7 @@ void TimersEngine::startStopCounting()
     }
     else
     {
-        mainPatternTimer.start(m_nextInterval);
+        mainPatternTimer.start(m_patternTimeIntervals.at(m_countingPosition));
     }
     emit isMetronomePlayingChanged();
 }

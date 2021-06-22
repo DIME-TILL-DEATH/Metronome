@@ -18,8 +18,8 @@ Metronome::Metronome(QObject *parent) : QObject(parent)
 
     connect(this, &Metronome::startStopPlaying,
             timersEngine, &TimersEngine::startStopCounting, Qt::QueuedConnection);
-    connect(this, &Metronome::setTimerNextInterval,
-            timersEngine, &TimersEngine::setNextInterval, Qt::QueuedConnection);
+    connect(this, &Metronome::setTimerIntervals,
+            timersEngine, &TimersEngine::setPatternTimeIntervals, Qt::QueuedConnection);
 
 
     timersEngine->moveToThread(timersThread);
@@ -46,10 +46,10 @@ MusicalPatternModel &Metronome::pattern(quint16 id)
     return m_activePreset.pattern(id);
 }
 
-void Metronome::mainPatternTimerEvent()
+void Metronome::mainPatternTimerEvent(quint16 activeNoteIndex)
 {
-//    MetronomePreset::NextNote nextNote = m_activePreset.popNote();
-    emit setTimerNextInterval(m_activePreset.popNote().timeInterval);
+    m_activeNoteIndex = activeNoteIndex;
+    emit activeNoteIndexChanged();
 }
 
 quint16 Metronome::tempo()
@@ -64,13 +64,25 @@ bool Metronome::isMetronomePlaying()
     return timersEngine->isTimersCounting();
 }
 
+quint16 Metronome::activeNoteIndex()
+{
+    return m_activeNoteIndex;
+}
+
 void Metronome::playStopButtonClick()
 {
+    emit setTimerIntervals(m_activePreset.patternTimeIntervals());
     emit startStopPlaying();
-//    emit setTimerNextInterval(m_activePreset.popNote().timeInterval);
+    emit activeNoteIndexChanged();
 }
 
 void Metronome::tempoChanged(quint16 tempo)
 {
     m_activePreset.setTempo(tempo);
+    emit setTimerIntervals(m_activePreset.patternTimeIntervals());
+}
+
+void Metronome::removeBar(quint16 barIndex)
+{
+
 }

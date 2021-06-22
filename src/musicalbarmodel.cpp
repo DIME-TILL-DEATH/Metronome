@@ -52,8 +52,7 @@ QVariant MusicalBarModel::data(const QModelIndex &index, int role) const
         }
         case PatternRoles::isActiveNoteRole:
         {
-//            return QVariant::fromValue(note.isPlaying);
-            return QVariant::fromValue(index.row() == m_activeNoteIndex);
+            return QVariant::fromValue(index.row() == m_selectedNoteIndex);
         }
         case PatternRoles::Line1Role: {
             return QVariant::fromValue(note.line1());
@@ -68,22 +67,27 @@ QVariant MusicalBarModel::data(const QModelIndex &index, int role) const
     }
 }
 
-std::pair<MusicalNote, int> MusicalBarModel::popNote()
+//std::pair<MusicalNote, int> MusicalBarModel::popNote()
+//{
+//    MusicalNote tempNote = m_notePattern.at(m_selectedNoteIndex);
+//    int noteRole=0;
+
+//    if(m_selectedNoteIndex == m_notePattern.size()-1)
+//    {
+//        m_selectedNoteIndex = 0;
+//        noteRole=1;
+//    }
+//    else
+//    {
+//        m_selectedNoteIndex++;
+//        noteRole=0;
+//    }
+//    emit dataChanged(createIndex(0, 0), createIndex(m_notePattern.size()-1, 0), {PatternRoles::isActiveNoteRole});
+
+//    return std::make_pair(tempNote, noteRole);
+//}
+
+const std::vector<MusicalNote> &MusicalBarModel::notePattern() const
 {
-    MusicalNote tempNote = m_notePattern.at(m_activeNoteIndex);
-    int noteRole=0;
-
-    if(m_activeNoteIndex == m_notePattern.size()-1)
-    {
-        m_activeNoteIndex = 0;
-        noteRole=1;
-    }
-    else
-    {
-        m_activeNoteIndex++;
-        noteRole=0;
-    }
-    emit dataChanged(createIndex(0, 0), createIndex(m_notePattern.size()-1, 0), {PatternRoles::isActiveNoteRole});
-
-    return std::make_pair(tempNote, noteRole);
+    return m_notePattern;
 }

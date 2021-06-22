@@ -7,6 +7,8 @@ import StyleSettings 1.0
 Item {
     id: _root
 
+    property alias barView: _barView
+
     width: _barView.count * 50
     height: parent.height
 

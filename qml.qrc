@@ -123,5 +123,7 @@
         <file>qml/StyleSettings/Style.qml</file>
         <file>qml/Base/AnimatedGradient.qml</file>
         <file>qml/Views/NoteViewer/NoteView.qml</file>
+        <file>qml/Views/NoteViewer/PopupEditBarMenu.qml</file>
+        <file>qml/Views/NoteViewer/NoteImage.qml</file>
     </qresource>
 </RCC>

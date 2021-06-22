@@ -20,6 +20,8 @@ private:
     QElapsedTimer elapsedTimer;
 
     quint16 m_nextInterval{500};
+    std::vector<quint16> m_patternTimeIntervals;
+    quint16 m_countingPosition{0};
 private slots:
     void processMainPatternTimerTimeout();
 
@@ -28,9 +30,9 @@ public slots:
     void startStopCounting();
     bool isTimersCounting();
     void setNextInterval(quint16 newNextInterval);
-
+    void setPatternTimeIntervals(const std::vector<quint16>& patternTimeIntervals);
 signals:
-    void mainPatternTimerTimout();
+    void mainPatternTimerTimout(quint16 activeNotexIndex);
     void isMetronomePlayingChanged();
 };
 

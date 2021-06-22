@@ -15,7 +15,7 @@ public:
     explicit SoundEngine(QObject *parent = nullptr);
 
 public slots:
-    void playMetronomeSound();
+    void playMetronomeSound(quint16 activeNoteIndex);
 
 signals:
 

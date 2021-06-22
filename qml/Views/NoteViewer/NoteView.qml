@@ -9,128 +9,35 @@ import StyleSettings 1.0
 
 Item {
     id: root
-    property bool activeNote: (isActiveNote & isActiveBar)
+    property var flatteredIndex
 
     opacity:  _delegateArea.pressed ? 0.5 : 1
+
+    state: ((flatteredIndex === Metronome.activeNoteIndex) & (!Metronome.isMetronomePlaying)) ?
+              "selected" : "base"
 
     MouseArea{
         id: _delegateArea
         anchors.fill: root
-
         pressAndHoldInterval: 500
         onPressAndHold: {
             _menu.popup()
         }
     }
 
-    Menu{
+    PopupEditBarMenu{
       id: _menu
-      closePolicy: Popup.CloseOnPressOutside | Popup.CloseOnEscape
-
-      width: {
-          var result = 0;
-          var padding = 0;
-          for (var i = 0; i < count; ++i) {
-              var item = itemAt(i);
-              result = Math.max(item.contentItem.implicitWidth, result);
-              padding = Math.max(item.padding, padding);
-          }
-          return result + padding * 2;
-      }
-
-      Menu {
-          title:  "Add"
-          width: parent.width
-              MenuItem {
-                  text:  "before"
-              }
-              MenuItem {
-                  text:  "after"
-              }
-      }
-      MenuItem {
-          text:  "Copy"
-      }
-      Menu {
-          title:  "Paste"
-          width: parent.width
-              MenuItem {
-                  text:  "before"
-              }
-              MenuItem {
-                  text:  "after"
-              }
-      }
-      MenuItem {
-          text:  "Edit"
-      }
-      MenuItem {
-          text:  "Remove"
-      }
-
-      enter: Transition {
-              ParallelAnimation {
-                  NumberAnimation { property: "height"; from: 0; to: _menu.height; duration: 200 }
-              }
-          }
     }
 
 
     ColumnLayout{
         x:5
         y: 30
-
         spacing: 5
 
-        Rectangle {
-            id: _imageNote
-
-            height: root.width
-            width: root.width
-
-            property alias image: _internalImage
-            color: "transparent"
-
-            Image{
-                id: _internalImage
-                anchors.fill: _imageNote
-
-                source: {
-                    switch(Number(type)){
-                        case MusicalTypes.Quarter : return Resources.musicalSymbols.quarterNoteIcon
-                        case MusicalTypes.Eight: return Resources.musicalSymbols.eightNoteIcon
-                        default: return Resources.musicalSymbols.quarterNoteIcon
-                    }
-                }
-                cache: true
-            }
-
-            ColorOverlay{
-                id: _overlay
-                anchors.fill: _internalImage
-                source: _imageNote.image
-                color:  (root.activeNote & Metronome.isMetronomePlaying) ? Style.imagesColorOverlayPlaying
-                                                                         : Style.imagesColorOverlay
-                antialiasing: true
-
-
-                SequentialAnimation on color{
-                    id: _blinkAnim
-                    loops: Animation.Infinite
-                    running: (root.activeNote & !Metronome.isMetronomePlaying) ? true
-                                                                               : false
-                    ColorAnimation{
-                        from: Style.imagesColorOverlay
-                        to: Style.imagesColorOverlayHighlighted
-                        duration: 750
-                    }
-                    ColorAnimation{
-                        from: Style.imagesColorOverlayHighlighted
-                        to: Style.imagesColorOverlay
-                        duration: 750
-                    }
-                }
-            }
+        NoteImage{
+            id: _noteImage
+            noteType: type
         }
 
         Text{
@@ -143,6 +50,47 @@ Item {
             text: line2
             color: Style.textColorMain
             horizontalAlignment: Text.AlignHCenter
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    states: [
+        State{
+            name: "base"
+            PropertyChanges { target: _noteImage.blinkAnim; running: false}
+            PropertyChanges { target: _noteImage.overlay; color: Style.imagesColorOverlay}
+        },
+        State{
+            name: "selected"
+            PropertyChanges { target: _noteImage.blinkAnim; running: true}
+        },
+        State{
+            name: "playing"
+            PropertyChanges { target: _noteImage.overlay; color: Style.imagesColorOverlayHighlighted}
+            PropertyChanges { target: _noteImage.blinkAnim; running: false}
+        }
+    ]
+
+    Connections{
+        target: Metronome
+        function onActiveNoteIndexChanged()
+        {
+            if(flatteredIndex === Metronome.activeNoteIndex)
+            {
+                state = "playing"
+            }
+            else
+            {
+                state = "base"
+            }
+        }
+
+        function onIsMetronomePlayingChanged()
+        {
+            if((!Metronome.isMetronomePlaying) & (flatteredIndex === Metronome.activeNoteIndex))
+            {
+               state = "selected"
+            }
         }
     }
 }

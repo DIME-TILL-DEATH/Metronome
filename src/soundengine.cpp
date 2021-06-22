@@ -6,8 +6,9 @@ SoundEngine::SoundEngine(QObject *parent) : QObject(parent)
     baseSound.setVolume(0.25f);
 }
 
-void SoundEngine::playMetronomeSound()
+void SoundEngine::playMetronomeSound(quint16 activeNoteIndex)
 {
+    Q_UNUSED(activeNoteIndex)
 //    qDebug() << "Time between clicks: " << elapsedTimer.elapsed();
 //    elapsedTimer.start();
 

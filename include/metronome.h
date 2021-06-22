@@ -13,7 +13,7 @@ class Metronome : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool isMetronomePlaying READ isMetronomePlaying NOTIFY isMetronomePlayingChanged)
-
+    Q_PROPERTY(quint16 activeNoteIndex READ activeNoteIndex NOTIFY activeNoteIndexChanged)
 public:
     static Metronome& instance();
 
@@ -21,6 +21,7 @@ public:
     Metronome operator=(const Metronome&) = delete;
 
     bool isMetronomePlaying();
+    quint16 activeNoteIndex();
 
     // Methods for UI
     Q_INVOKABLE quint16 tempo();// переделать на property
@@ -30,6 +31,7 @@ private:
     Metronome(QObject *parent = nullptr);
     ~Metronome();
 
+    quint16 m_activeNoteIndex{0};
 
     TimersEngine* timersEngine;
     SoundEngine* soundEngine;
@@ -42,18 +44,21 @@ private:
 
 signals:
     void isMetronomePlayingChanged();
-
-    // передавать std::map или аналог с интервалами соответствующими следующей ноте
-    void setTimerNextInterval(quint16 interval);
+    void activeNoteIndexChanged();
+    void setTimerIntervals(const std::vector<quint16>& patternTimeIntervals);
     void startStopPlaying();
 
 public slots:
     // заменить на timerEvent, принимать id таймера у которого произошёл таймаут, в соотвтествии
     // с ним извлекать ноту из нужного паттерна
     // или ничего не делать, если это событие базового метронома, а не паттерна
-    void mainPatternTimerEvent();
+    void mainPatternTimerEvent(quint16 activeNoteIndex);
+
     void playStopButtonClick();
     void tempoChanged(quint16 tempo);
+
+    // Операции редактирования из UI
+    void removeBar(quint16 barIndex);
 };
 
 #endif // METRONOME_H

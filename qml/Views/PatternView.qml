@@ -51,4 +51,34 @@ Item {
             }
         }
     }
+
+    function setNoteFlatIndex()
+    {
+        var notePosition = 0;
+
+        for(var barIndex = 0; barIndex < _listView.count; barIndex++)
+        {
+            for(var noteInBar = 0; noteInBar < _listView.itemAtIndex(barIndex).children[2].count; noteInBar++)
+            {
+    //                    console.log("Bar number: ", barIndex, "Note flat index: ", notePosition)
+                _listView.itemAtIndex(barIndex).barView.itemAtIndex(noteInBar).flatteredIndex = notePosition
+                notePosition++
+            }
+        }
+    }
+
+    Component.onCompleted:
+    {
+        // даёт warning при старте, тк компонент-наследник ещё не создан
+        setNoteFlatIndex()
+    }
+
+    Connections{
+        target: Metronome
+        function onSetTimerIntervals()
+        {
+            setNoteFlatIndex()
+        }
+    }
 }
+

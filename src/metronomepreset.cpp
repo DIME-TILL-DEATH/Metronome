@@ -3,6 +3,7 @@
 
 MetronomePreset::MetronomePreset()
 {
+    // времянка. Инициализировать из default файла
     m_patterns.push_back(new MusicalPatternModel);
     m_patterns.push_back(new MusicalPatternModel);
 }
@@ -47,43 +48,73 @@ quint16 MetronomePreset::tempo() const
     return m_tempo;
 }
 
-MetronomePreset::NextNote MetronomePreset::popNote(quint16 patternId)
+//MetronomePreset::NextNote MetronomePreset::popNote(quint16 patternId)
+//{
+//    if(patternId > m_patterns.size()-1)
+//    {
+//        qWarning() << "Pattern with id: " << patternId << " doesn't exist!";
+//        return {100, 0}; // ну такое. Надо что-то поумнее
+//    }
+
+//    MusicalNote note = m_patterns.at(patternId)->popNote();
+//    MetronomePreset::NextNote returnValue;
+
+//    // Убого!!!!
+//    switch(note.type())
+//    {
+//        case MusicalTypes::NoteType::Quarter:
+//        {
+//            returnValue.timeInterval = m_timeIntervals.Quarter;
+//            break;
+//        }
+//        case MusicalTypes::NoteType::Eight:
+//        {
+//            returnValue.timeInterval = m_timeIntervals.Eight;
+//            break;
+//        }
+//        default:
+//        {
+//            returnValue.timeInterval = m_timeIntervals.Quarter;
+//            break;
+//        }
+//    }
+
+//    returnValue.isFirstBarNote = false;
+
+//    return returnValue;
+//}
+
+std::vector<quint16> MetronomePreset::patternTimeIntervals(quint16 patternId)
 {
     if(patternId > m_patterns.size()-1)
     {
         qWarning() << "Pattern with id: " << patternId << " doesn't exist!";
-        return {100, 0}; // ну такое. Надо что-то поумнее
+        return {120}; // ну такое. Надо что-то поумнее
     }
 
-    MusicalNote note = m_patterns.at(patternId)->popNote();
-    MetronomePreset::NextNote returnValue;
-
-    // Убого!!!!
-    switch(note.type())
+    std::vector<quint16> resultVector;
+    for(const auto& itNote : m_patterns.at(patternId)->notePattern())
     {
-        case MusicalTypes::NoteType::Quarter:
+        // Убого!!!!
+        switch(itNote.type())
         {
-            returnValue.timeInterval = m_timeIntervals.Quarter;
-            break;
-        }
-        case MusicalTypes::NoteType::Eight:
-        {
-            returnValue.timeInterval = m_timeIntervals.Eight;
-            break;
-        }
-        default:
-        {
-            returnValue.timeInterval = m_timeIntervals.Quarter;
-            break;
+            case MusicalTypes::NoteType::Quarter:
+            {
+                resultVector.push_back(m_timeIntervals.Quarter);
+                break;
+            }
+            case MusicalTypes::NoteType::Eight:
+            {
+                resultVector.push_back(m_timeIntervals.Eight);
+                break;
+            }
+            default:
+            {
+                resultVector.push_back(m_timeIntervals.Quarter);
+                break;
+            }
         }
     }
 
-    returnValue.isFirstBarNote = false;
-
-    return returnValue;
+    return resultVector;
 }
-
-//const MusicalTypes::TimeIntervals &MetronomePreset::timeIntervals() const
-//{
-//    return m_timeIntervals;
-//}
