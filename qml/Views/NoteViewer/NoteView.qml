@@ -11,24 +11,17 @@ Item {
     id: root
     property var flatteredIndex
 
-    opacity:  _delegateArea.pressed ? 0.5 : 1
-
     state: ((flatteredIndex === Metronome.activeNoteIndex) & (!Metronome.isMetronomePlaying)) ?
               "selected" : "base"
+
+    opacity: _delegateArea.pressed ? 0.5 : 1
 
     MouseArea{
         id: _delegateArea
         anchors.fill: root
-        pressAndHoldInterval: 500
-        onPressAndHold: {
-            _menu.popup()
-        }
+        z: -15
+        propagateComposedEvents: true
     }
-
-    PopupEditBarMenu{
-      id: _menu
-    }
-
 
     ColumnLayout{
         x:5

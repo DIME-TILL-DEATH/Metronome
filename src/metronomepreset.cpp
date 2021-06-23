@@ -6,6 +6,7 @@ MetronomePreset::MetronomePreset()
     // времянка. Инициализировать из default файла
     m_patterns.push_back(new MusicalPatternModel);
     m_patterns.push_back(new MusicalPatternModel);
+    setTempo(m_tempo);
 }
 
 MusicalPatternModel &MetronomePreset::pattern(quint16 id)
@@ -24,19 +25,20 @@ bool MetronomePreset::setTempo(quint16 tempo)
    {
        m_tempo = tempo;
 
-       // возможно надо переделать в цикл и хранить длительности эффективнее
-       // base intervals
-       m_timeIntervals.Whole = MusicalTypes::OneMinute/(tempo/4);
-       m_timeIntervals.Half = MusicalTypes::OneMinute/(tempo/2);
-       m_timeIntervals.Quarter = MusicalTypes::OneMinute/(tempo);
-       m_timeIntervals.Eight = MusicalTypes::OneMinute/(tempo*2);
-       m_timeIntervals.Sixteenth = MusicalTypes::OneMinute/(tempo*4);
-       m_timeIntervals.Thirty_second = MusicalTypes::OneMinute/(tempo*8);
+       m_timeIntervals.clear();
+
+       // возможно можно сделать не вручную, а через цикл перебор типов и рассчёт
+       m_timeIntervals[MusicalTypes::NoteType::Whole] = MusicalTypes::OneMinute/(tempo/4);
+       m_timeIntervals[MusicalTypes::NoteType::Half] = MusicalTypes::OneMinute/(tempo/2);
+       m_timeIntervals[MusicalTypes::NoteType::Quarter] = MusicalTypes::OneMinute/(tempo);
+       m_timeIntervals[MusicalTypes::NoteType::Eight] = MusicalTypes::OneMinute/(tempo*2);
+       m_timeIntervals[MusicalTypes::NoteType::Sixteenth] = MusicalTypes::OneMinute/(tempo*4);
+       m_timeIntervals[MusicalTypes::NoteType::Thirty_second] = MusicalTypes::OneMinute/(tempo*8);
 
        // triplets
-       m_timeIntervals.Eight_triplet = MusicalTypes::OneMinute/(tempo*3);
-       m_timeIntervals.Sixteenth_triplet = MusicalTypes::OneMinute/(tempo*6);
-       m_timeIntervals.Thirty_second_triplet = MusicalTypes::OneMinute/(tempo*12);
+       m_timeIntervals[MusicalTypes::NoteType::Eight_triplet] = MusicalTypes::OneMinute/(tempo*3);
+       m_timeIntervals[MusicalTypes::NoteType::Sixteenth_triplet] = MusicalTypes::OneMinute/(tempo*6);
+       m_timeIntervals[MusicalTypes::NoteType::Thirty_second_triplet] = MusicalTypes::OneMinute/(tempo*12);
 
        return true;
    }
@@ -48,73 +50,40 @@ quint16 MetronomePreset::tempo() const
     return m_tempo;
 }
 
-//MetronomePreset::NextNote MetronomePreset::popNote(quint16 patternId)
-//{
-//    if(patternId > m_patterns.size()-1)
-//    {
-//        qWarning() << "Pattern with id: " << patternId << " doesn't exist!";
-//        return {100, 0}; // ну такое. Надо что-то поумнее
-//    }
-
-//    MusicalNote note = m_patterns.at(patternId)->popNote();
-//    MetronomePreset::NextNote returnValue;
-
-//    // Убого!!!!
-//    switch(note.type())
-//    {
-//        case MusicalTypes::NoteType::Quarter:
-//        {
-//            returnValue.timeInterval = m_timeIntervals.Quarter;
-//            break;
-//        }
-//        case MusicalTypes::NoteType::Eight:
-//        {
-//            returnValue.timeInterval = m_timeIntervals.Eight;
-//            break;
-//        }
-//        default:
-//        {
-//            returnValue.timeInterval = m_timeIntervals.Quarter;
-//            break;
-//        }
-//    }
-
-//    returnValue.isFirstBarNote = false;
-
-//    return returnValue;
-//}
-
-std::vector<quint16> MetronomePreset::patternTimeIntervals(quint16 patternId)
+std::vector<quint16> MetronomePreset::patternTimeIntervals(quint16 patternIndex)
 {
-    if(patternId > m_patterns.size()-1)
+    if(patternIndex > m_patterns.size()-1)
     {
-        qWarning() << "Pattern with id: " << patternId << " doesn't exist!";
+        qWarning() << "Pattern with id: " << patternIndex << " doesn't exist!";
         return {120}; // ну такое. Надо что-то поумнее
     }
 
     std::vector<quint16> resultVector;
-    for(const auto& itNote : m_patterns.at(patternId)->notePattern())
+    for(const auto& itNote : m_patterns.at(patternIndex)->notePattern())
     {
-        // Убого!!!!
-        switch(itNote.type())
-        {
-            case MusicalTypes::NoteType::Quarter:
-            {
-                resultVector.push_back(m_timeIntervals.Quarter);
-                break;
-            }
-            case MusicalTypes::NoteType::Eight:
-            {
-                resultVector.push_back(m_timeIntervals.Eight);
-                break;
-            }
-            default:
-            {
-                resultVector.push_back(m_timeIntervals.Quarter);
-                break;
-            }
-        }
+        resultVector.push_back(m_timeIntervals.at(itNote.type()));
     }
-
     return resultVector;
+}
+
+bool MetronomePreset::addBar(const MusicalBarModel &newBar, quint16 barIndex, quint16 patternIndex)
+{
+    if(patternIndex > m_patterns.size()-1)
+    {
+        qWarning() << "Trying to add bar. Pattern with index " << patternIndex << " is not availiable";
+        return false;
+    }
+    m_patterns.at(patternIndex)->addBar(newBar, barIndex);
+    return true;
+}
+
+bool MetronomePreset::removeBar(quint16 barIndex, quint16 patternIndex)
+{
+    if(patternIndex > m_patterns.size()-1)
+    {
+        qWarning() << "Trying to remove bar. Pattern with index " << patternIndex << " is not availiable";
+        return false;
+    }
+    m_patterns.at(patternIndex)->removeBar(barIndex);
+    return true;
 }

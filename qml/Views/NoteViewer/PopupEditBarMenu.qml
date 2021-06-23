@@ -1,54 +1,63 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.12
 
-Menu{
-  id: _menu
-  closePolicy: Popup.CloseOnPressOutside | Popup.CloseOnEscape
+import "../../Functions.js" as Functions
 
-  width: {
-      var result = 0;
-      var padding = 0;
-      for (var i = 0; i < count; ++i) {
-          var item = itemAt(i);
-          result = Math.max(item.contentItem.implicitWidth, result);
-          padding = Math.max(item.padding, padding);
+
+Item{
+    property alias mainMenu:    _menu
+    property alias addItem:     _itemAdd
+    property alias copyItem:    _itemCopy
+    property alias pasteItem:   _itemPaste
+    property alias removeItem:  _itemRemove
+    Menu{
+      id: _menu
+      closePolicy: Popup.CloseOnPressOutside | Popup.CloseOnEscape
+
+
+      width: Functions.getMenuWidthByItems(_menu)
+
+      MenuItem {
+          id: _itemAdd
+          text:  "Add"
       }
-      return result + padding * 2;
-  }
-
-  Menu {
-      title:  "Add"
-      width: parent.width
-          MenuItem {
-              text:  "before"
-          }
-          MenuItem {
-              text:  "after"
-          }
-  }
-  MenuItem {
-      text:  "Copy"
-  }
-  Menu {
-      title:  "Paste"
-      width: parent.width
-          MenuItem {
-              text:  "before"
-          }
-          MenuItem {
-              text:  "after"
-          }
-  }
-  MenuItem {
-      text:  "Edit"
-  }
-  MenuItem {
-      text:  "Remove"
-  }
-
-  enter: Transition {
-          ParallelAnimation {
-              NumberAnimation { property: "height"; from: 0; to: _menu.height; duration: 200 }
-          }
+      MenuItem {
+          id: _itemCopy
+          text:  "Copy"
       }
+      MenuItem {
+          id: _itemPaste
+          text:  "Paste"
+      }
+      MenuItem {
+          id: _itemEdit
+          text:  "Edit"
+      }
+      MenuItem {
+          id: _itemRemove
+          text:  "Remove"
+      }
+
+      //-------------------------------------------------------------------------------------------
+      enter: Transition {
+              ParallelAnimation {
+                  NumberAnimation { property: "height"; from: 0; to: _menu.height; duration: 200 }
+              }
+      }
+    }
+
+    states:[
+      State {
+          name: "onExistingBar"
+          PropertyChanges {target: _itemCopy; enabled: true}
+          PropertyChanges {target: _itemRemove; enabled: true}
+      },
+      State {
+          name: "onEmptySpace"
+          PropertyChanges {target: _itemCopy; enabled: false}
+          PropertyChanges {target: _itemRemove; enabled: false}
+
+      }
+    ]
 }
+

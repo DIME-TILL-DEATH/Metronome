@@ -25,10 +25,15 @@ Rectangle {
         id: _internalImage
         anchors.fill: _imageNote
 
+        // пока так, но решить вопрос с отрисовками триолей и связей
         source: {
             switch(Number(noteType)){
+                case MusicalTypes.Whole : return Resources.musicalSymbols.wholeNoteIcon
+                case MusicalTypes.Half : return Resources.musicalSymbols.halfNoteIcon
                 case MusicalTypes.Quarter : return Resources.musicalSymbols.quarterNoteIcon
                 case MusicalTypes.Eight: return Resources.musicalSymbols.eightNoteIcon
+                case MusicalTypes.Sixteenth : return Resources.musicalSymbols.sixteenthNoteIcon
+                case MusicalTypes.Thirty_second : return Resources.musicalSymbols.thirtysecondNoteIcon
                 default: return Resources.musicalSymbols.quarterNoteIcon
             }
         }
@@ -40,6 +45,7 @@ Rectangle {
         anchors.fill: _internalImage
         source: _imageNote.image
         antialiasing: true
+
         SequentialAnimation on color{
             id: _blinkAnim
             loops: Animation.Infinite

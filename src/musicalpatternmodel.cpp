@@ -6,13 +6,20 @@ MusicalPatternModel::MusicalPatternModel(QObject *parent)
     : QAbstractListModel(parent)
 {
     static MusicalBarModel tempBar1(parent);
-    static MusicalBarModel tempBar2({{MusicalTypes::NoteType::Quarter, "R", " "},
-    {MusicalTypes::NoteType::Eight, "R", " "},
-    {MusicalTypes::NoteType::Eight, "L", "F"},
-    {MusicalTypes::NoteType::Quarter, "R", " "},
-    {MusicalTypes::NoteType::Eight, "L", " "},
-    {MusicalTypes::NoteType::Eight, "L", "F"}}, parent);
-    static MusicalBarModel tempBar3(parent);
+    static MusicalBarModel tempBar2({
+                                        {MusicalTypes::NoteType::Quarter, "R", " "},
+                                        {MusicalTypes::NoteType::Eight, "R", " "},
+                                        {MusicalTypes::NoteType::Eight, "L", "F"},
+                                        {MusicalTypes::NoteType::Quarter, "R", " "},
+                                        {MusicalTypes::NoteType::Eight, "L", " "},
+                                        {MusicalTypes::NoteType::Eight, "L", "F"}
+                                    }, parent);
+    static MusicalBarModel tempBar3({
+                                        {MusicalTypes::NoteType::Whole, "", " "},
+                                        {MusicalTypes::NoteType::Half, "", " "},
+                                        {MusicalTypes::NoteType::Sixteenth, "", ""},
+                                        {MusicalTypes::NoteType::Thirty_second, "", " "},
+                                    }, parent);
 
     m_barPattern = {
         &tempBar1,
@@ -32,7 +39,7 @@ QHash<int, QByteArray> MusicalPatternModel::roleNames() const
     QHash<int, QByteArray> roles;
     roles[PatternRoles::BarModelRole] = "barModel";
     roles[PatternRoles::BarNumberRole] = "barNumber";
-    roles[PatternRoles::isActiveBarRole] = "isActiveBar";
+//    roles[PatternRoles::isActiveBarRole] = "isActiveBar";
 
     return roles;
 }
@@ -62,10 +69,10 @@ QVariant MusicalPatternModel::data(const QModelIndex &index, int role) const
         // типо хака, может быть надо придумать хранение номер такта в последовательности по-другому
             return QVariant::fromValue(index.row()+1);
         }
-        case PatternRoles::isActiveBarRole:
-        {
-            return QVariant::fromValue(m_selectedBarIndex == index.row());
-        }
+//        case PatternRoles::isActiveBarRole:
+//        {
+//            return QVariant::fromValue(m_selectedBarIndex == index.row());
+//        }
         default:
         {
             return true;
@@ -73,30 +80,30 @@ QVariant MusicalPatternModel::data(const QModelIndex &index, int role) const
     }
 }
 
-//MusicalNote MusicalPatternModel::popNote()
-//{
-//    // TODO: проверка размера такта, если нота была последняя, увеличить m_activeBar
-//    // и уже после запускать proceedNextNote
+bool MusicalPatternModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    Q_UNUSED(role)
+    if(!index.isValid() || index.row() > rowCount(index))
+    {
+        qWarning() << "Try to set data, index is invalid";
+        return false;
+    }
 
-//    std::pair<MusicalNote, int> activeNote = m_barPattern.at(m_activeBarIndex)->popNote();
+    MusicalBarModel* newBar = value.value<MusicalBarModel*>();
+    // если паттерн меньше нового - добавить, если больше-удалить лишнее, потом переписать те что остались
+    // не забыть присвоить такту размер!
+    m_barPattern.at(index.row())->removeRows(0, m_barPattern.at(index.row())->notePattern().size());
+    m_barPattern.at(index.row())->insertRows(0, newBar->notePattern().size());
+    for(quint16 i=0; i < newBar->notePattern().size(); i++)
+    {
+        m_barPattern.at(index.row())->setData(createIndex(i, 0), QVariant::fromValue<MusicalNote>(newBar->notePattern().at(i)));
+    }
+    delete newBar;
+    m_barPattern.at(index.row())->changeContent(*value.value<MusicalBarModel*>());
 
-//    if(activeNote.second == 1)
-//    {
-//        if(m_activeBarIndex == m_barPattern.size()-1)
-//        {
-//            m_activeBarIndex=0;
-//        }
-//        else
-//        {
-//            m_activeBarIndex++;
-//        }
-//    }
-
-//    emit dataChanged(createIndex(0, 0), createIndex(m_barPattern.size()-1, 0), {PatternRoles::isActiveBarRole});
-
-
-//    return activeNote.first;
-//}
+    emit dataChanged(createIndex(0, 0), createIndex(m_barPattern.size()-1, 0));
+    return true;
+}
 
 std::vector<MusicalNote> MusicalPatternModel::notePattern()
 {
@@ -109,4 +116,65 @@ std::vector<MusicalNote> MusicalPatternModel::notePattern()
         }
     }
     return flatteredNotePattern;
+}
+
+
+bool MusicalPatternModel::insertRows(int row, int count, const QModelIndex &parent)
+{
+    Q_UNUSED(parent)
+
+    // Заглушка
+//    MusicalBarModel* tempBar1 = new MusicalBarModel(nullptr);
+    if(row < 0)
+    {
+        qWarning() << "Trying to insert row in pattern in negative position!";
+        return false;
+    }
+    beginInsertRows(parent, row, row+count-1);
+
+    m_barPattern.insert(m_barPattern.begin()+row, count, {});
+//    m_barPattern.at(row)->insertRows(0, 4);
+    //    QQmlEngine::setObjectOwnership(m_barPattern.at(row), QQmlEngine::CppOwnership);
+
+    endInsertRows();
+    return true;
+}
+
+bool MusicalPatternModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    Q_UNUSED(parent)
+
+    quint16 barIndex = static_cast<quint16>(row);
+
+    if(barIndex > m_barPattern.size()-1 )
+    {
+        qWarning() << "Trying to remove Bar. Index " << row <<" out of bounds!";
+        return false;
+    }
+    beginRemoveRows(QModelIndex(), barIndex, barIndex + count - 1);
+
+    m_barPattern.erase(m_barPattern.begin()+barIndex, m_barPattern.begin()+barIndex+count);
+
+    endRemoveRows();
+
+    return true;
+}
+
+bool MusicalPatternModel::addBar(const MusicalBarModel &newBar, quint16 barIndex)
+{
+    emit layoutAboutToBeChanged();
+    insertRows(barIndex, 1);
+//    m_barPattern.at(barIndex)->setData(createIndex(barIndex, 0), QVariant::fromValue<MusicalBarModel*>(m_barPattern.at(barIndex)));
+
+//    m_barPattern.at(barIndex)->changeContent(newBar);
+    emit dataChanged(createIndex(0, 0), createIndex(m_barPattern.size()-1, 0));
+    emit layoutChanged();
+    return true;
+}
+
+bool MusicalPatternModel::removeBar(quint16 barIndex)
+{
+    bool resultVal = removeRows(barIndex, 1);
+    emit dataChanged(createIndex(0, 0), createIndex(m_barPattern.size()-1, 0));
+    return resultVal;
 }

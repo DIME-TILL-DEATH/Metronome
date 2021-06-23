@@ -82,7 +82,16 @@ void Metronome::tempoChanged(quint16 tempo)
     emit setTimerIntervals(m_activePreset.patternTimeIntervals());
 }
 
-void Metronome::removeBar(quint16 barIndex)
+void Metronome::addBar(quint16 barIndex, quint16 patternIndex)
 {
+    m_activePreset.addBar({{   {MusicalTypes::NoteType::Eight, "L", " "},
+                               {MusicalTypes::NoteType::Eight, "L", " "},
+                               {MusicalTypes::NoteType::Eight, "L", " "},
+                               {MusicalTypes::NoteType::Eight, "L", " "}
+                           }, nullptr}, barIndex, patternIndex);
+}
 
+void Metronome::removeBar(quint16 barIndex, quint16 patternIndex)
+{
+    m_activePreset.removeBar(barIndex, patternIndex);
 }

@@ -3,6 +3,8 @@
 MusicalNote::MusicalNote(MusicalTypes::NoteType type)
     : m_type(type)
 {
+    m_line1 = " ";
+    m_line2 = " ";
 }
 
 MusicalNote::MusicalNote(MusicalTypes::NoteType type, QString line1, QString line2)

@@ -47,6 +47,14 @@ void TimersEngine::processMainPatternTimerTimeout()
 
 void TimersEngine::startStopCounting()
 {
+    // пока установка проигрывания с нуля, чтобы после редактирования
+    // не вывалиться за пределы вектора и не словить exception
+    // TODO: сделать правильное проигрывание просле редактирования(удаления такта)
+    if(m_countingPosition > m_patternTimeIntervals.size()-1)
+    {
+        m_countingPosition = 0;
+    }
+
     if(mainPatternTimer.isActive())
     {
         mainPatternTimer.stop();

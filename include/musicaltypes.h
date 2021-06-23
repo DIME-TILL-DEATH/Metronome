@@ -15,21 +15,25 @@ public:
         Quarter = 4,
         Eight = 8,
         Sixteenth = 16,
-        Thirty_second = 32
+        Thirty_second = 32,
+
+        Eight_triplet = 12,
+        Sixteenth_triplet = 24,
+        Thirty_second_triplet = 24
     };
     Q_ENUM(NoteType)
 
-    struct TimeIntervals{
-        quint16 Whole,
-        Half,
-        Quarter,
-        Eight,
-        Eight_triplet,
-        Sixteenth,
-        Sixteenth_triplet,
-        Thirty_second,
-        Thirty_second_triplet;
-    };
+//    struct TimeIntervals{
+//        quint16 Whole,
+//        Half,
+//        Quarter,
+//        Eight,
+//        Eight_triplet,
+//        Sixteenth,
+//        Sixteenth_triplet,
+//        Thirty_second,
+//        Thirty_second_triplet;
+//    };
 };
 
 #endif // MUSICALTYPES_H
