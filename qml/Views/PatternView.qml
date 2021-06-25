@@ -2,6 +2,8 @@ import QtQuick 2.15
 import QtQuick.Controls 2.3
 import Views 1.0
 
+import StyleSettings 1.0
+
 import "../Functions.js" as Functions
 
 Item {
@@ -46,8 +48,8 @@ Item {
             flickableDirection: Flickable.AutoFlickIfNeeded
             boundsBehavior: Flickable.StopAtBounds
 
-            width: parent.width
-            height: parent.height
+            width: _rootRectangle.width
+            height: _rootRectangle.height
 
             model: patternModel
 
@@ -64,9 +66,9 @@ Item {
                     // Два почти одинаковых MouseArea это убого,
                     // но весь функционал по выделению и перетаскиванию работает
                     // пока только так
-                    pressAndHoldInterval: 500
+                    pressAndHoldInterval: Constants.pressAndHoldTime
                     onPressAndHold: {
-                        _menuPopUp.mainMenu.popup()
+                        _menuPopUp.mainMenu.popup(mapToItem(_rootRectangle, mouseX, mouseY))
                         selectedItemIndex = index
                         _menuPopUp.state = (selectedItemIndex === -1) ? "onEmptySpace" : "onExistingBar"
                     }
@@ -76,14 +78,26 @@ Item {
             MouseArea{
                 id: _emptySpace
                 z: -10
-                anchors.fill: _listView
+                anchors.fill: parent
                 propagateComposedEvents: true
 
-                pressAndHoldInterval: 500
+                pressAndHoldInterval: Constants.pressAndHoldTime
                 onPressAndHold: {
-                    _menuPopUp.mainMenu.popup()
-                    selectedItemIndex = _listView.indexAt(_emptySpace.mouseX, _emptySpace.mouseY)
-                    _menuPopUp.state = (selectedItemIndex === -1) ? "onEmptySpace" : "onExistingBar"
+                    _menuPopUp.mainMenu.popup( mouseX, mouseY)
+//                    var itemCoords = mapToItem(_listView, mouseX, mouseY)
+//                    console.log(itemCoords)
+//                    selectedItemIndex = _listView.indexAt(itemCoords)
+//                    console.log(selectedItemIndex)
+//                    _menuPopUp.state = (selectedItemIndex === -1) ? "onEmptySpace" : "onExistingBar"
+                    if(selectedItemIndex === -1)
+                    {
+                        _menuPopUp.state = "onEmptySpace"
+                        selectedItemIndex = _listView.count
+                    }
+                    else
+                    {
+                        _menuPopUp.state = "onExistingBar"
+                    }
                 }
             }
 
@@ -97,17 +111,17 @@ Item {
 
             }
             removeDisplaced: Transition {
-                     NumberAnimation { properties: "x"; duration: 250 }
+                     NumberAnimation { properties: "x"; duration: Constants.animationTransitionInterval }
             }
             add: Transition {
                 ParallelAnimation {
-                             NumberAnimation { property: "opacity"; to: 0; duration: 250 }
-                             NumberAnimation { property: "width"; to: 0; duration: 250 }
+                             NumberAnimation { property: "opacity"; to: 1; duration: Constants.animationTransitionInterval }
+//                             NumberAnimation { property: "width"; from: 0; to: width; duration: 250 }
                          }
 
             }
             addDisplaced: Transition {
-                     NumberAnimation { properties: "x"; duration: 250 }
+                     NumberAnimation { properties: "x"; duration: Constants.animationTransitionInterval }
             }
         }
     }
@@ -116,6 +130,7 @@ Item {
       id: _menuPopUp
 
       addItem.onTriggered: {
+
           Metronome.addBar(selectedItemIndex)
       }
 

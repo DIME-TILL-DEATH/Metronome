@@ -19,8 +19,9 @@ Item {
     MouseArea{
         id: _delegateArea
         anchors.fill: root
-        z: -15
+//        z: -15
         propagateComposedEvents: true
+
     }
 
     ColumnLayout{

@@ -126,5 +126,6 @@
         <file>qml/Views/NoteViewer/PopupEditBarMenu.qml</file>
         <file>qml/Views/NoteViewer/NoteImage.qml</file>
         <file>qml/Functions.js</file>
+        <file>qml/StyleSettings/Constants.qml</file>
     </qresource>
 </RCC>

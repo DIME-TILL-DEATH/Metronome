@@ -61,6 +61,7 @@ Item {
         delegate: NoteView{
             id: _note
             width: noteWidth
+            height: _barView.height
         }
     }
 }

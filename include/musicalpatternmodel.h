@@ -29,7 +29,7 @@ public:
     // в методе Metronome или Preset? Который владеет и моделью и хранилищем?
     std::vector<MusicalNote> notePattern();
 
-    bool addBar(const MusicalBarModel& newBar, quint16 barIndex);
+    bool addBar(MusicalBar *newBar, quint16 barIndex);
     bool removeBar(quint16 barIndex);
 
 private:

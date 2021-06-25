@@ -66,7 +66,7 @@ std::vector<quint16> MetronomePreset::patternTimeIntervals(quint16 patternIndex)
     return resultVector;
 }
 
-bool MetronomePreset::addBar(const MusicalBarModel &newBar, quint16 barIndex, quint16 patternIndex)
+bool MetronomePreset::addBar(MusicalBar* newBar, quint16 barIndex, quint16 patternIndex)
 {
     if(patternIndex > m_patterns.size()-1)
     {

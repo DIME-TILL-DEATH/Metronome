@@ -19,7 +19,7 @@ public:
 
     std::vector<quint16> patternTimeIntervals(quint16 patternIndex=0);
 
-    bool addBar(const MusicalBarModel& newBar, quint16 barIndex, quint16 patternIndex);
+    bool addBar(MusicalBar *newBar, quint16 barIndex, quint16 patternIndex);
     bool removeBar(quint16 barIndex, quint16 patternIndex = 0);
 
 private:

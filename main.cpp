@@ -6,6 +6,10 @@
 
 #include <QSoundEffect>
 
+#ifdef Q_OS_ANDROID
+#include <QtSvg>    //Because deployment sometimes just forgets to include this lib otherwise
+#endif
+
 #include "musicalpatternmodel.h"
 #include "musicalnote.h"
 

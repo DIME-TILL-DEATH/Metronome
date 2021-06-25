@@ -39,8 +39,6 @@ QHash<int, QByteArray> MusicalPatternModel::roleNames() const
     QHash<int, QByteArray> roles;
     roles[PatternRoles::BarModelRole] = "barModel";
     roles[PatternRoles::BarNumberRole] = "barNumber";
-//    roles[PatternRoles::isActiveBarRole] = "isActiveBar";
-
     return roles;
 }
 
@@ -57,7 +55,6 @@ QVariant MusicalPatternModel::data(const QModelIndex &index, int role) const
         return {};
     }
 
-
     switch(role)
     {
         case PatternRoles::BarModelRole:
@@ -69,10 +66,6 @@ QVariant MusicalPatternModel::data(const QModelIndex &index, int role) const
         // типо хака, может быть надо придумать хранение номер такта в последовательности по-другому
             return QVariant::fromValue(index.row()+1);
         }
-//        case PatternRoles::isActiveBarRole:
-//        {
-//            return QVariant::fromValue(m_selectedBarIndex == index.row());
-//        }
         default:
         {
             return true;
@@ -89,17 +82,19 @@ bool MusicalPatternModel::setData(const QModelIndex &index, const QVariant &valu
         return false;
     }
 
-    MusicalBarModel* newBar = value.value<MusicalBarModel*>();
+    // вообще не доделано
+
+//    MusicalBarModel* newBar = value.value<MusicalBarModel*>();
     // если паттерн меньше нового - добавить, если больше-удалить лишнее, потом переписать те что остались
     // не забыть присвоить такту размер!
-    m_barPattern.at(index.row())->removeRows(0, m_barPattern.at(index.row())->notePattern().size());
-    m_barPattern.at(index.row())->insertRows(0, newBar->notePattern().size());
-    for(quint16 i=0; i < newBar->notePattern().size(); i++)
-    {
-        m_barPattern.at(index.row())->setData(createIndex(i, 0), QVariant::fromValue<MusicalNote>(newBar->notePattern().at(i)));
-    }
-    delete newBar;
-    m_barPattern.at(index.row())->changeContent(*value.value<MusicalBarModel*>());
+//    m_barPattern.at(index.row())->removeRows(0, m_barPattern.at(index.row())->notePattern().size());
+//    m_barPattern.at(index.row())->insertRows(0, newBar->notePattern().size());
+//    for(quint16 i=0; i < newBar->notePattern().size(); i++)
+//    {
+//        m_barPattern.at(index.row())->setData(createIndex(i, 0), QVariant::fromValue<MusicalNote>(newBar->notePattern().at(i)));
+//    }
+//    delete newBar;
+//    m_barPattern.at(index.row())->changeContent(*value.value<MusicalBarModel*>());
 
     emit dataChanged(createIndex(0, 0), createIndex(m_barPattern.size()-1, 0));
     return true;
@@ -123,8 +118,6 @@ bool MusicalPatternModel::insertRows(int row, int count, const QModelIndex &pare
 {
     Q_UNUSED(parent)
 
-    // Заглушка
-//    MusicalBarModel* tempBar1 = new MusicalBarModel(nullptr);
     if(row < 0)
     {
         qWarning() << "Trying to insert row in pattern in negative position!";
@@ -132,10 +125,9 @@ bool MusicalPatternModel::insertRows(int row, int count, const QModelIndex &pare
     }
     beginInsertRows(parent, row, row+count-1);
 
-    m_barPattern.insert(m_barPattern.begin()+row, count, {});
-//    m_barPattern.at(row)->insertRows(0, 4);
-    //    QQmlEngine::setObjectOwnership(m_barPattern.at(row), QQmlEngine::CppOwnership);
-
+    // Не появляется ли тут утечка памяти из-за new MusicalBarModel()?
+    // удаляется ли этот объект в деструкторе?
+    m_barPattern.insert(m_barPattern.begin()+row, count, new MusicalBarModel());
     endInsertRows();
     return true;
 }
@@ -160,15 +152,12 @@ bool MusicalPatternModel::removeRows(int row, int count, const QModelIndex &pare
     return true;
 }
 
-bool MusicalPatternModel::addBar(const MusicalBarModel &newBar, quint16 barIndex)
+bool MusicalPatternModel::addBar(MusicalBar* newBar, quint16 barIndex)
 {
-    emit layoutAboutToBeChanged();
     insertRows(barIndex, 1);
-//    m_barPattern.at(barIndex)->setData(createIndex(barIndex, 0), QVariant::fromValue<MusicalBarModel*>(m_barPattern.at(barIndex)));
+    m_barPattern.at(barIndex)->setBar(newBar);
 
-//    m_barPattern.at(barIndex)->changeContent(newBar);
     emit dataChanged(createIndex(0, 0), createIndex(m_barPattern.size()-1, 0));
-    emit layoutChanged();
     return true;
 }
 
