@@ -12,6 +12,7 @@
 
 #include "musicalpatternmodel.h"
 #include "musicalnote.h"
+#include "musicalbar.h"
 
 #include "metronome.h"
 
@@ -24,20 +25,15 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
 //------------------------------------------------------------------
-    // Singletone
-    Metronome& metronome{Metronome::instance()};
+    Metronome& metronome{Metronome::instance()}; // Singletone
     engine.rootContext()->setContextProperty("Metronome", &metronome);
     engine.rootContext()->setContextProperty("mainPattern", &metronome.pattern(0));
     engine.rootContext()->setContextProperty("secondaryPattern", &metronome.pattern(1));
 
-//    qmlRegisterSingletonInstance("SingletoneMetronome", 1, 0, "Metronome", &metronome);
 //    MusicalPatternModel::registerMe("CoreApplicationModule");
 
-    // перенести регистрацию класса(или нет?)
-    qmlRegisterUncreatableType<MusicalTypes>("MusicalTypesModule", 1, 0,
-                                            "MusicalTypes",
-                                            "Error: Only for enums!"); // Зарегистрировать данный класс в качестве мета объекта
-
+    qRegisterMetaType<MusicalNote>("MusicalNote");
+    qRegisterMetaType<MusicalBar>("MusicalBar");
 //---------------------------------------------------------------------
     engine.addImportPath(":/qml");
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));

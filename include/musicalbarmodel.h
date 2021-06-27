@@ -23,18 +23,12 @@ public:
     QVariant data(const QModelIndex& index = {}, int role = Qt::DisplayRole) const override;
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
-    bool setData(const QModelIndex &index, const QVariant &value, int role = TypeRole) override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role = MusicalNoteRole) override;
 
     // по идее вытаскиваем notePattern напрямую из MusicBar
     // поэтому отказаться от этого метода и полностью развязать
     // хранение и модель
     const std::vector<MusicalNote> &notePattern() const;
-
-    // пока так. Удаляем и переписываем старый такт.
-    // возможно в будущем надо сделать как-то поэффективнее
-//    void changeContent(const MusicalBarModel& newBar);
-//    const std::pair<quint8, MusicalTypes::NoteType> &timeSignature() const;
-//    void updateLayout();
 
     MusicalBar *bar() const;
     void setBar(MusicalBar *newBar);
@@ -47,10 +41,7 @@ private:
     quint16 m_selectedNoteIndex{0};
 
     enum PatternRoles{
-        TypeRole = Qt::UserRole + 1,
-//        isActiveNoteRole,
-        Line1Role,
-        Line2Role
+        MusicalNoteRole = Qt::UserRole + 1
     };
 };
 

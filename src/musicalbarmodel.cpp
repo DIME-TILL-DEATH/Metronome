@@ -26,9 +26,10 @@ MusicalBarModel::~MusicalBarModel()
 QHash<int, QByteArray> MusicalBarModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles[PatternRoles::TypeRole]       = "type";
-    roles[PatternRoles::Line1Role]      = "line1";
-    roles[PatternRoles::Line2Role]      = "line2";
+//    roles[PatternRoles::TypeRole]       = "type";
+//    roles[PatternRoles::Line1Role]      = "line1";
+//    roles[PatternRoles::Line2Role]      = "line2";
+    roles[PatternRoles::MusicalNoteRole]= "note";
 
     return roles;
 }
@@ -47,17 +48,22 @@ QVariant MusicalBarModel::data(const QModelIndex &index, int role) const
     }
 
     const MusicalNote& note {m_bar->noteAt(index.row())};
+    // как-то уродливо. Нельзя ли поаккуратнее?
+    MusicalNote copyNote = note;
 
     switch(role)
     {
-        case PatternRoles::TypeRole: {
-            return QVariant::fromValue(note.type());
-        }
-        case PatternRoles::Line1Role: {
-            return QVariant::fromValue(note.line1());
-        }
-        case PatternRoles::Line2Role: {
-            return QVariant::fromValue(note.line2());
+//        case PatternRoles::TypeRole: {
+//            return QVariant::fromValue(note.type());
+//        }
+//        case PatternRoles::Line1Role: {
+//            return QVariant::fromValue(note.line1());
+//        }
+//        case PatternRoles::Line2Role: {
+//            return QVariant::fromValue(note.line2());
+//        }
+        case PatternRoles::MusicalNoteRole: {
+            return QVariant::fromValue(copyNote);
         }
         default:
         {
@@ -99,7 +105,6 @@ bool MusicalBarModel::removeRows(int row, int count, const QModelIndex &parent)
 
     beginRemoveRows(QModelIndex(), noteIndex, noteIndex + noteCount - 1);
 
-//    m_notePattern.erase(m_notePattern.begin()+noteIndex, m_notePattern.begin()+noteIndex+noteCount);
     m_bar->removeNotes(noteIndex, noteCount);
     endRemoveRows();
 
@@ -115,7 +120,6 @@ bool MusicalBarModel::setData(const QModelIndex &index, const QVariant &value, i
         return false;
     }
 
-//    m_notePattern.at(index.row()) = value.value<MusicalNote>();
     m_bar->setNote(index.row(), value.value<MusicalNote>());
 
     emit dataChanged(createIndex(0, 0), createIndex(m_bar->notePatternSize()-1, 0));
@@ -127,11 +131,6 @@ const std::vector<MusicalNote> &MusicalBarModel::notePattern() const
     return m_bar->notePattern();
 }
 
-//void MusicalBarModel::updateLayout()
-//{
-//    emit dataChanged(createIndex(0, 0), createIndex(m_bar->notePatternSize()-1, 0));
-//}
-
 MusicalBar *MusicalBarModel::bar() const
 {
     return m_bar;
@@ -141,19 +140,4 @@ void MusicalBarModel::setBar(MusicalBar *newBar)
 {
     m_bar = newBar;
 }
-//void MusicalBarModel::changeContent(const MusicalBarModel &newBar)
-//{
-//    // пока так. Удаляем все ноты из старого и записываем новый.
-//    // возможно в будущем надо сделать как-то поэффективнее
-//    m_timeSignature = newBar.timeSignature();
-//    removeRows(0, m_notePattern.size());
-//    insertRows(0, newBar.m_notePattern.size());
-//    m_notePattern = newBar.notePattern();
-//    emit layoutChanged();
-//    emit dataChanged(createIndex(0, 0), createIndex(m_notePattern.size()-1, 0));
-//}
 
-//const std::pair<quint8, MusicalTypes::NoteType> &MusicalBarModel::timeSignature() const
-//{
-//    return m_timeSignature;
-//}

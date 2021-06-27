@@ -4,7 +4,7 @@ function setNoteFlatIndex(listView)
 
     for(var barIndex = 0; barIndex < listView.count; barIndex++)
     {
-        for(var noteInBar = 0; noteInBar < listView.itemAtIndex(barIndex).children[2].count; noteInBar++)
+        for(var noteInBar = 0; noteInBar < listView.itemAtIndex(barIndex).barView.count; noteInBar++)
         {
             _listView.itemAtIndex(barIndex).barView.itemAtIndex(noteInBar).flatteredIndex = notePosition
             notePosition++

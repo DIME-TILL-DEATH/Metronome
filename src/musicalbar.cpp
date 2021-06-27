@@ -151,6 +151,16 @@ const MusicalNote &MusicalBar::noteAt(quint16 position) const
     return m_notePattern.at(position);
 }
 
+MusicalNote MusicalBar::noteQMLAt(quint16 position)
+{
+    if(position > m_notePattern.size()-1)
+    {
+        qWarning() << "MusicalBar->noteAt(), position " << position << "is out of range!";
+        return m_notePattern.at(0);
+    }
+    return m_notePattern.at(position);
+}
+
 const std::pair<quint8, MusicalTypes::NoteType> &MusicalBar::timeSignature() const
 {
     return m_timeSignature;

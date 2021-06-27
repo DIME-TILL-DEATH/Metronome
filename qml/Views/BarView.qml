@@ -2,7 +2,6 @@ import QtQuick 2.10
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 
-import MusicalTypesModule 1.0
 import StyleSettings 1.0
 
 Item {
@@ -13,24 +12,8 @@ Item {
 
     width: _barView.count * noteWidth
 
-
-    Rectangle{
-        id: _barLineStart
-        color: Style.imagesColorOverlay
-        x:0; y:0
-        width: 2
-        height: parent.height / 2
-    }
-    // почему-то ломает анимацию и подсветку
-//    Rectangle{
-//        id: _barLineStop
-//        color: Style.imagesColorOverlay
-//        x: _root.width-width ; y:0; z:-50
-//        width: 2
-//        height: parent.height / 2
-//    }
     Text{
-        x: _barLineStart.width + 5
+        x: 5
         color: Style.textColorMain
         font.pointSize: 10
         text: barNumber
@@ -57,11 +40,37 @@ Item {
 
 
         model: barModel
+//        model: _model
 
         delegate: NoteView{
             id: _note
             width: noteWidth
             height: _barView.height
+        }
+
+        header: Rectangle{
+            id: _barLineStart
+            color: Style.imagesColorOverlay
+            width: 2
+            height: parent.height / 2
+        }
+        footer: Rectangle{
+            id: _barLineStop
+            color: Style.imagesColorOverlay
+            width: 2
+            height: parent.height / 2
+        }
+    }
+
+    ListModel{
+        id: _model
+    }
+
+    Component.onCompleted: {
+        var noteIndex
+        for(noteIndex=0; noteIndex < bar.notePatternSize(); noteIndex++)
+        {
+            _model.append({"note": bar.noteQMLAt(noteIndex)})
         }
     }
 }

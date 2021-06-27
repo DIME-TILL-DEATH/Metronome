@@ -17,7 +17,7 @@ public:
 
     Q_INVOKABLE int notePatternSize();
 
-    bool addNote(quint16 position, MusicalNote note);
+    Q_INVOKABLE bool addNote(quint16 position, MusicalNote note = MusicalTypes::NoteType::Half);
     bool addNotes(quint16 position, quint16 count, MusicalNote note);
     bool addNotes(quint16 position, std::vector<MusicalNote> notePattern);
 
@@ -31,6 +31,8 @@ public:
     bool removeNotes(quint16 position, quint16 count);
 
     Q_INVOKABLE const MusicalNote& noteAt(quint16 position) const;
+    // а нужна ли версия с возвращаемой ссылкой?
+    Q_INVOKABLE MusicalNote noteQMLAt(quint16 position);
 
     const std::pair<quint8, MusicalTypes::NoteType> &timeSignature() const;
     void setTimeSignature(const std::pair<quint8, MusicalTypes::NoteType> &newTimeSignature);

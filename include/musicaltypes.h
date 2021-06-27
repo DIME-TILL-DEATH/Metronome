@@ -1,12 +1,10 @@
 #ifndef MUSICALTYPES_H
 #define MUSICALTYPES_H
 
-#include <QObject>
-
-class MusicalTypes
+#include <QHash>
+namespace MusicalTypes
 {
-    Q_GADGET
-public:
+
     static constexpr quint16 OneMinute{60000};
 
     enum class NoteType : quint8 {
@@ -21,19 +19,19 @@ public:
         Sixteenth_triplet = 24,
         Thirty_second_triplet = 24
     };
-    Q_ENUM(NoteType)
 
-//    struct TimeIntervals{
-//        quint16 Whole,
-//        Half,
-//        Quarter,
-//        Eight,
-//        Eight_triplet,
-//        Sixteenth,
-//        Sixteenth_triplet,
-//        Thirty_second,
-//        Thirty_second_triplet;
-//    };
-};
+    static QHash<QString, MusicalTypes::NoteType> noteNames{
+        {"Whole",           MusicalTypes::NoteType::Whole},
+        {"Half",            MusicalTypes::NoteType::Half},
+        {"Quarter",         MusicalTypes::NoteType::Quarter},
+        {"Eight",           MusicalTypes::NoteType::Eight},
+        {"Sixteenth",       MusicalTypes::NoteType::Sixteenth},
+        {"ThirtySecond",    MusicalTypes::NoteType::Thirty_second},
+
+        {"EightTriplet",        MusicalTypes::NoteType::Eight_triplet},
+        {"SixteenthTriplet",    MusicalTypes::NoteType::Sixteenth_triplet},
+        {"ThirtySecondTriplet", MusicalTypes::NoteType::Thirty_second_triplet}
+    };
+}
 
 #endif // MUSICALTYPES_H

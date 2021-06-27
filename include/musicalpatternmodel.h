@@ -39,6 +39,7 @@ private:
     enum PatternRoles{
         BarModelRole= Qt::UserRole + 1,
         BarNumberRole,
+        BarRole
 //        isActiveBarRole
     };
 };

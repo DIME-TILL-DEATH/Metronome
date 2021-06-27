@@ -39,6 +39,7 @@ QHash<int, QByteArray> MusicalPatternModel::roleNames() const
     QHash<int, QByteArray> roles;
     roles[PatternRoles::BarModelRole] = "barModel";
     roles[PatternRoles::BarNumberRole] = "barNumber";
+    roles[PatternRoles::BarRole] = "bar";
     return roles;
 }
 
@@ -65,6 +66,10 @@ QVariant MusicalPatternModel::data(const QModelIndex &index, int role) const
         {
         // типо хака, может быть надо придумать хранение номер такта в последовательности по-другому
             return QVariant::fromValue(index.row()+1);
+        }
+        case PatternRoles::BarRole:
+        {
+            return QVariant::fromValue(*m_barPattern.at(index.row())->bar());
         }
         default:
         {

@@ -4,7 +4,6 @@ import QtQuick.Controls 2.3
 import QtGraphicalEffects 1.0
 import ResourceProvider 1.0
 
-import MusicalTypesModule 1.0
 import StyleSettings 1.0
 
 Item {
@@ -22,6 +21,9 @@ Item {
 //        z: -15
         propagateComposedEvents: true
 
+        onClicked: {
+            console.log(flatteredIndex)
+        }
     }
 
     ColumnLayout{
@@ -31,17 +33,17 @@ Item {
 
         NoteImage{
             id: _noteImage
-            noteType: type
+            noteType: note.name()
         }
 
         Text{
-            text: line1
+            text: note.line1()
             color: Style.textColorMain
             horizontalAlignment: Text.AlignHCenter
         }
 
         Text{
-            text: line2
+            text: note.line2()
             color: Style.textColorMain
             horizontalAlignment: Text.AlignHCenter
         }

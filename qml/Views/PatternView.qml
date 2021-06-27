@@ -150,6 +150,7 @@ Item {
         function onSetTimerIntervals()
         {
             Functions.setNoteFlatIndex(_listView)
+
         }
     }
 }

@@ -3,7 +3,6 @@ import QtQuick.Controls 2.3
 import QtGraphicalEffects 1.0
 
 import ResourceProvider 1.0
-import MusicalTypesModule 1.0
 import StyleSettings 1.0
 
 
@@ -27,13 +26,13 @@ Rectangle {
 
         // пока так, но решить вопрос с отрисовками триолей и связей
         source: {
-            switch(Number(noteType)){
-                case MusicalTypes.Whole : return Resources.musicalSymbols.wholeNoteIcon
-                case MusicalTypes.Half : return Resources.musicalSymbols.halfNoteIcon
-                case MusicalTypes.Quarter : return Resources.musicalSymbols.quarterNoteIcon
-                case MusicalTypes.Eight: return Resources.musicalSymbols.eightNoteIcon
-                case MusicalTypes.Sixteenth : return Resources.musicalSymbols.sixteenthNoteIcon
-                case MusicalTypes.Thirty_second : return Resources.musicalSymbols.thirtysecondNoteIcon
+            switch(noteType){
+                case "Whole" : return Resources.musicalSymbols.wholeNoteIcon
+                case "Half" : return Resources.musicalSymbols.halfNoteIcon
+                case "Quarter" : return Resources.musicalSymbols.quarterNoteIcon
+                case "Eight": return Resources.musicalSymbols.eightNoteIcon
+                case "Sixteenth" : return Resources.musicalSymbols.sixteenthNoteIcon
+                case "Thirty_second" : return Resources.musicalSymbols.thirtysecondNoteIcon
                 default: return Resources.musicalSymbols.quarterNoteIcon
             }
         }
