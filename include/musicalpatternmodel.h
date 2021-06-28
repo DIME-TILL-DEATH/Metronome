@@ -9,15 +9,12 @@
 #include "musicalnote.h"
 #include "musicalbar.h"
 #include "musicalpattern.h"
-#include "musicalbarmodel.h"
 
 class MusicalPatternModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    explicit MusicalPatternModel(QObject *parent = nullptr);
-    MusicalPatternModel(std::vector<MusicalBarModel*> barPattern, QObject *parent = nullptr);
-    MusicalPatternModel(MusicalPattern &barPattern);
+    MusicalPatternModel(MusicalPattern &barPattern) : m_barPattern{barPattern}{};
 
     QHash<int, QByteArray> roleNames() const override;
     int rowCount(const QModelIndex &parent) const override;
@@ -27,11 +24,11 @@ public:
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
-    bool addBar(MusicalBar *newBar, quint16 barIndex);
+    bool addBar(const MusicalBar &newBar, quint16 barIndex);
     bool removeBar(quint16 barIndex);
 
 private:
-    MusicalPattern* m_barPattern;
+    MusicalPattern& m_barPattern;
     quint16 m_selectedBarIndex{0};
 
     enum PatternRoles{

@@ -60,10 +60,14 @@ Item {
             width: 2
             height: parent.height / 2
         }
+
+
     }
 
     ListModel{
         id: _model
+
+
     }
 
     Component.onCompleted: {

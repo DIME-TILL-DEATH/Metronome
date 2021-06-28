@@ -9,7 +9,6 @@ INCLUDEPATH += $$PWD/include
 
 HEADERS += \
     include/musicalbar.h \
-    include/musicalbarmodel.h \
     include/musicalpattern.h \
     include/musicaltypes.h \
     include/metronome.h \
@@ -23,7 +22,7 @@ SOURCES += \
         main.cpp \
         src/metronome.cpp \
         src/metronomepreset.cpp \
-        src/musicalbarmodel.cpp \
+        src/musicalbar.cpp \
         src/musicalnote.cpp \
         src/musicalpattern.cpp \
         src/musicalpatternmodel.cpp \

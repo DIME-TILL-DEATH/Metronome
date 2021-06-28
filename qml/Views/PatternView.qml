@@ -104,8 +104,8 @@ Item {
             // выделить анимации в отдельный блок/файл, обощить
             remove: Transition {
                 ParallelAnimation {
-                             NumberAnimation { property: "opacity"; to: 0; duration: 250 }
-                             NumberAnimation { property: "width"; to: 0; duration: 250 }
+                             NumberAnimation { property: "opacity"; to: 0; duration: Constants.animationTransitionInterval  }
+                             NumberAnimation { property: "width"; to: 0; duration: Constants.animationTransitionInterval  }
                          }
 
             }

@@ -27,19 +27,21 @@ public:
     bool setNotes(quint16 position, quint16 count, MusicalNote note);
     bool setNotes(quint16 position, std::vector<MusicalNote> notePattern);
 
+    // заменить на оператор
     void replaceNotePattern(std::vector<MusicalNote> newNotePattern);
 
     bool removeNote(quint16 position);
     bool removeNotes(quint16 position, quint16 count);
 
-    Q_INVOKABLE const MusicalNote& noteAt(quint16 position) const;
+    // Заменить на оператор
+    const MusicalNote& noteAt(quint16 position) const;
     // а нужна ли версия с возвращаемой ссылкой?
     Q_INVOKABLE MusicalNote noteQMLAt(quint16 position);
 
     const std::pair<quint8, MusicalTypes::NoteType> &timeSignature() const;
     void setTimeSignature(const std::pair<quint8, MusicalTypes::NoteType> &newTimeSignature);
 
-    std::vector<MusicalNote> &notePattern();
+    const std::vector<MusicalNote> &notePattern() const;
 
 private:
     std::vector<MusicalNote> m_notePattern;

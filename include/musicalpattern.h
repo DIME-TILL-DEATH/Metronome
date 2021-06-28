@@ -12,9 +12,9 @@ public:
     MusicalPattern();
     MusicalPattern(const std::vector<MusicalBar> &barPattern);
     MusicalPattern(const MusicalPattern& barPattern);
-    ~MusicalPattern();
 
     MusicalPattern& operator=(const MusicalPattern& barPattern);
+    MusicalPattern& operator=(const std::vector<MusicalBar>& barPattern);
     MusicalBar& operator[](quint16 index);
     const MusicalBar& operator[](quint16 index) const;
 
@@ -23,8 +23,14 @@ public:
     MusicalPattern& operator+=(const MusicalPattern& barPattern);
     MusicalPattern& operator+=(const MusicalBar& bar);
 
+    bool addBar(quint16 position, const MusicalBar& bar = MusicalBar());
+    bool addBars(quint16 position, quint16 count, const MusicalBar& bar = MusicalBar());
+    bool addBars(quint16 position, std::vector<MusicalBar> newBarPattern);
+
+    bool removeBar(quint16 position);
+    bool removeBars(quint16 position, quint16 count);
+
     const std::vector<MusicalBar> &barPattern() const;
-    void setBarPattern(const std::vector<MusicalBar> &newBarPattern);
 
     std::vector<MusicalNote> notePattern();
     quint16 barsCount();

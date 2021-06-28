@@ -77,7 +77,7 @@ std::vector<quint16> MetronomePreset::patternTimeIntervals(quint16 patternIndex)
     return resultVector;
 }
 
-bool MetronomePreset::addBar(MusicalBar* newBar, quint16 barIndex, quint16 patternIndex)
+bool MetronomePreset::addBar(const MusicalBar& newBar, quint16 barIndex, quint16 patternIndex)
 {
     if(patternIndex > m_patterns.size()-1)
     {
@@ -95,6 +95,6 @@ bool MetronomePreset::removeBar(quint16 barIndex, quint16 patternIndex)
         qWarning() << "Trying to remove bar. Pattern with index " << patternIndex << " is not availiable";
         return false;
     }
-    model2->removeBar(barIndex);
+    model1->removeBar(barIndex);
     return true;
 }

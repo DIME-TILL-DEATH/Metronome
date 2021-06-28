@@ -84,7 +84,7 @@ void Metronome::tempoChanged(quint16 tempo)
 
 void Metronome::addBar(quint16 barIndex, quint16 patternIndex)
 {
-    m_activePreset.addBar(new MusicalBar({{MusicalTypes::NoteType::Eight, "L", " "},
+    m_activePreset.addBar(MusicalBar({{MusicalTypes::NoteType::Eight, "L", " "},
                                           {MusicalTypes::NoteType::Eight, "L", " "},
                                           {MusicalTypes::NoteType::Eight, "L", " "},
                                            {MusicalTypes::NoteType::Eight, "L", " "}
