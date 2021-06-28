@@ -15,7 +15,9 @@ public:
     MusicalBar(const MusicalBar& bar);
     ~MusicalBar();
 
-    Q_INVOKABLE int notePatternSize();
+    MusicalBar& operator=(const MusicalBar& bar);
+
+    Q_INVOKABLE int notesCount();
 
     Q_INVOKABLE bool addNote(quint16 position, MusicalNote note = MusicalTypes::NoteType::Half);
     bool addNotes(quint16 position, quint16 count, MusicalNote note);
@@ -37,7 +39,7 @@ public:
     const std::pair<quint8, MusicalTypes::NoteType> &timeSignature() const;
     void setTimeSignature(const std::pair<quint8, MusicalTypes::NoteType> &newTimeSignature);
 
-    const std::vector<MusicalNote> &notePattern() const;
+    std::vector<MusicalNote> &notePattern();
 
 private:
     std::vector<MusicalNote> m_notePattern;

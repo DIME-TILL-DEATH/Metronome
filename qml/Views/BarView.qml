@@ -39,8 +39,8 @@ Item {
         height: _root.height
 
 
-        model: barModel
-//        model: _model
+//        model: barModel
+        model: _model
 
         delegate: NoteView{
             id: _note
@@ -67,8 +67,7 @@ Item {
     }
 
     Component.onCompleted: {
-        var noteIndex
-        for(noteIndex=0; noteIndex < bar.notePatternSize(); noteIndex++)
+        for(var noteIndex=0; noteIndex < bar.notesCount(); noteIndex++)
         {
             _model.append({"note": bar.noteQMLAt(noteIndex)})
         }

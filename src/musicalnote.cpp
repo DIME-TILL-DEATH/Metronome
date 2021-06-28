@@ -20,17 +20,17 @@ const MusicalTypes::NoteType &MusicalNote::type() const
     return m_type;
 }
 
-QString MusicalNote::line1() const
+const QString &MusicalNote::line1() const
 {
     return m_line1;
 }
 
-QString MusicalNote::line2() const
+const QString &MusicalNote::line2() const
 {
     return m_line2;
 }
 
-QString MusicalNote::name()
+QString MusicalNote::name() const
 {
     return MusicalTypes::noteNames.key(m_type);
 }

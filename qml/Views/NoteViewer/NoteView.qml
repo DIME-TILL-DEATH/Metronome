@@ -33,17 +33,17 @@ Item {
 
         NoteImage{
             id: _noteImage
-            noteType: note.name()
+            noteType: note.name
         }
 
         Text{
-            text: note.line1()
+            text: note.line1
             color: Style.textColorMain
             horizontalAlignment: Text.AlignHCenter
         }
 
         Text{
-            text: note.line2()
+            text: note.line2
             color: Style.textColorMain
             horizontalAlignment: Text.AlignHCenter
         }

@@ -4,9 +4,19 @@
 MetronomePreset::MetronomePreset()
 {
     // времянка. Инициализировать из default файла
-    m_patterns.push_back(new MusicalPatternModel);
-    m_patterns.push_back(new MusicalPatternModel);
+    m_patterns.push_back(MusicalPattern());
+    m_patterns.push_back(MusicalPattern());
+
+    model1 = new MusicalPatternModel(m_patterns.at(0));
+    model2 = new MusicalPatternModel(m_patterns.at(1));
+
     setTempo(m_tempo);
+}
+
+MetronomePreset::~MetronomePreset()
+{
+    delete model1;
+    delete model2;
 }
 
 MusicalPatternModel &MetronomePreset::pattern(quint16 id)
@@ -14,9 +24,10 @@ MusicalPatternModel &MetronomePreset::pattern(quint16 id)
     if(id > m_patterns.size()-1)
     {
         qWarning() << "Pattern with id: " << id << " doesn't exist! Returning pattern with id 0";
-        return *m_patterns.at(0); // ну такое. Надо что-то поумнее
+//        return *m_patterns.at(0); // ну такое. Надо что-то поумнее
     }
-    return *m_patterns.at(id);
+//    return *m_patterns.at(id);
+    return *model1;
 }
 
 bool MetronomePreset::setTempo(quint16 tempo)
@@ -59,7 +70,7 @@ std::vector<quint16> MetronomePreset::patternTimeIntervals(quint16 patternIndex)
     }
 
     std::vector<quint16> resultVector;
-    for(const auto& itNote : m_patterns.at(patternIndex)->notePattern())
+    for(auto& itNote : m_patterns.at(patternIndex).notePattern())
     {
         resultVector.push_back(m_timeIntervals.at(itNote.type()));
     }
@@ -73,7 +84,7 @@ bool MetronomePreset::addBar(MusicalBar* newBar, quint16 barIndex, quint16 patte
         qWarning() << "Trying to add bar. Pattern with index " << patternIndex << " is not availiable";
         return false;
     }
-    m_patterns.at(patternIndex)->addBar(newBar, barIndex);
+    model1->addBar(newBar, barIndex);
     return true;
 }
 
@@ -84,6 +95,6 @@ bool MetronomePreset::removeBar(quint16 barIndex, quint16 patternIndex)
         qWarning() << "Trying to remove bar. Pattern with index " << patternIndex << " is not availiable";
         return false;
     }
-    m_patterns.at(patternIndex)->removeBar(barIndex);
+    model2->removeBar(barIndex);
     return true;
 }

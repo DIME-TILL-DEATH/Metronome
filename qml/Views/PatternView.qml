@@ -53,7 +53,6 @@ Item {
 
             model: patternModel
 
-
             delegate: BarView{
                 height: _listView.height
 

@@ -11,6 +11,7 @@ class MetronomePreset
 {
 public:
     MetronomePreset();
+    ~MetronomePreset();
 
     MusicalPatternModel& pattern(quint16 id=0);
 
@@ -25,7 +26,10 @@ public:
 private:
     quint16 m_tempo {120};
     std::map<MusicalTypes::NoteType, quint16> m_timeIntervals;
-    std::vector<MusicalPatternModel*> m_patterns;
+    std::vector<MusicalPattern> m_patterns;
+    // Временно!
+    MusicalPatternModel* model1;
+    MusicalPatternModel* model2;
 };
 
 #endif // METRONOMEPRESET_H

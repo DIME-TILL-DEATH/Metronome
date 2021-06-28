@@ -37,7 +37,7 @@ QHash<int, QByteArray> MusicalBarModel::roleNames() const
 int MusicalBarModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return static_cast<int>(m_bar->notePatternSize());
+    return static_cast<int>(m_bar->notesCount());
 }
 
 QVariant MusicalBarModel::data(const QModelIndex &index, int role) const
@@ -97,7 +97,7 @@ bool MusicalBarModel::removeRows(int row, int count, const QModelIndex &parent)
     quint16 noteIndex = static_cast<quint16>(row);
     quint16 noteCount = static_cast<quint16>(count);
 
-    if(noteIndex+noteCount > m_bar->notePatternSize()-1)
+    if(noteIndex+noteCount > m_bar->notesCount()-1)
     {
         qWarning() << "Trying to remove note. Index " << row <<" out of bounds!";
         return false;
@@ -122,7 +122,7 @@ bool MusicalBarModel::setData(const QModelIndex &index, const QVariant &value, i
 
     m_bar->setNote(index.row(), value.value<MusicalNote>());
 
-    emit dataChanged(createIndex(0, 0), createIndex(m_bar->notePatternSize()-1, 0));
+    emit dataChanged(createIndex(0, 0), createIndex(m_bar->notesCount()-1, 0));
     return true;
 }
 
