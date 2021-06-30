@@ -58,8 +58,9 @@ public slots:
     void tempoChanged(quint16 tempo);
 
     // Операции редактирования из UI
-    void addBar(quint16 barIndex, quint16 patternIndex = 0);
+    void addBar(quint16 barIndex, quint16 patternIndex = 0, MusicalBar bar = MusicalBar());
     void removeBar(quint16 barIndex, quint16 patternIndex = 0);
+    void updateModel(quint16 patternIndex = 0);
 };
 
 #endif // METRONOME_H

@@ -24,6 +24,8 @@ Rectangle {
         id: _internalImage
         anchors.fill: _imageNote
 
+        property alias overlay : _overlay
+
         // пока так, но решить вопрос с отрисовками триолей и связей
         source: {
             switch(noteType){
@@ -32,7 +34,7 @@ Rectangle {
                 case "Quarter" : return Resources.musicalSymbols.quarterNoteIcon
                 case "Eight": return Resources.musicalSymbols.eightNoteIcon
                 case "Sixteenth" : return Resources.musicalSymbols.sixteenthNoteIcon
-                case "Thirty_second" : return Resources.musicalSymbols.thirtysecondNoteIcon
+                case "ThirtySecond" : return Resources.musicalSymbols.thirtysecondNoteIcon
                 default: return Resources.musicalSymbols.quarterNoteIcon
             }
         }

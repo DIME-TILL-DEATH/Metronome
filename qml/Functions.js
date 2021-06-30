@@ -6,7 +6,7 @@ function setNoteFlatIndex(listView)
     {
         for(var noteInBar = 0; noteInBar < listView.itemAtIndex(barIndex).barView.count; noteInBar++)
         {
-            _listView.itemAtIndex(barIndex).barView.itemAtIndex(noteInBar).flatteredIndex = notePosition
+            listView.itemAtIndex(barIndex).barView.itemAtIndex(noteInBar).flatteredIndex = notePosition
             notePosition++
         }
     }
@@ -21,4 +21,10 @@ function getMenuWidthByItems(menu) {
         padding = Math.max(item.padding, padding);
     }
     return result + padding * 2;
+}
+
+function listProperty(item)
+{
+    for (var p in item)
+    console.log(p + ": " + item[p]);
 }

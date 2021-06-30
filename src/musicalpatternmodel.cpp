@@ -116,3 +116,8 @@ bool MusicalPatternModel::removeBar(quint16 barIndex)
     emit dataChanged(createIndex(0, 0), createIndex(m_barPattern.barsCount(), 0));
     return resultVal;
 }
+
+void MusicalPatternModel::updateModel()
+{
+    emit dataChanged(createIndex(0, 0), createIndex(m_barPattern.barsCount(), 0));
+}

@@ -15,6 +15,7 @@ HEADERS += \
     include/metronomepreset.h \
     include/musicalnote.h \
     include/musicalpatternmodel.h \
+    include/patterneditor.h \
     include/soundengine.h \
     include/timersengine.h
 
@@ -26,6 +27,7 @@ SOURCES += \
         src/musicalnote.cpp \
         src/musicalpattern.cpp \
         src/musicalpatternmodel.cpp \
+        src/patterneditor.cpp \
         src/soundengine.cpp \
         src/timersengine.cpp
 

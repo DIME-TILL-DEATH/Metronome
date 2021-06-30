@@ -15,37 +15,42 @@ Item {
 
     opacity: _delegateArea.pressed ? 0.5 : 1
 
+    signal noteViewClicked(index: int)
     MouseArea{
         id: _delegateArea
         anchors.fill: root
-//        z: -15
+        z: -15
         propagateComposedEvents: true
 
         onClicked: {
-            console.log(flatteredIndex)
+            root.noteViewClicked(index)
         }
     }
 
     ColumnLayout{
-        x:5
-        y: 30
-        spacing: 5
+//        spacing: 5
+
+        anchors.fill: root
 
         NoteImage{
             id: _noteImage
             noteType: note.name
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+            Layout.fillHeight: false
         }
 
         Text{
             text: note.line1
             color: Style.textColorMain
-            horizontalAlignment: Text.AlignHCenter
+            Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
+            Layout.fillHeight: false
         }
 
         Text{
             text: note.line2
             color: Style.textColorMain
-            horizontalAlignment: Text.AlignHCenter
+            Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
+            Layout.fillHeight: false
         }
     }
 

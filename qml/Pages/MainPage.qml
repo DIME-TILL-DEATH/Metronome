@@ -6,6 +6,8 @@ import Base 1.0
 import StyleSettings 1.0
 import ResourceProvider 1.0
 
+import "../Functions.js" as Functions
+
 Page {
     id: _page
 
@@ -40,8 +42,8 @@ Page {
             icon.width: parent.height * 0.4
 
             onClicked: {
-                // working, but disabled for future use
-//                 _page.SwipeView.view.incrementCurrentIndex()
+                _swipeView.pop()
+//                console.log(_page.height)
             }
         }
 
@@ -72,5 +74,12 @@ Page {
             id: _metronomeButtonsView
 
         }
+    }
+
+    Component.onCompleted:
+    {
+        // даёт warning при старте, тк компонент-наследник ещё не создан
+        Functions.setNoteFlatIndex(_patternview1.patternViewer)
+        Functions.setNoteFlatIndex(_patternview2.patternViewer)
     }
 }

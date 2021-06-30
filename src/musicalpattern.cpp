@@ -116,7 +116,7 @@ bool MusicalPattern::removeBar(quint16 position)
 
 bool MusicalPattern::removeBars(quint16 position, quint16 count)
 {
-    if(position+count-1 > m_barPattern.size()-1)
+    if(position+count-1 > static_cast<quint16>(m_barPattern.size()-1))
     {
         qWarning() << "MusicalPattern.removeBars(), start position " << position << ", end position " << position+count <<"is out of range!";
         return false;

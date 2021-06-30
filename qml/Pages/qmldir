@@ -1,4 +1,5 @@
 module Pages
 
-MainPage 1.0 MainPage.qml
-PresetsPage 1.0 PresetsPage.qml
+MainPage            1.0 MainPage.qml
+PatternEditorPage   1.0 PatternEditorPage.qml
+PresetsPage         1.0 PresetsPage.qml

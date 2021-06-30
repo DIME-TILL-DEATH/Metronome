@@ -10,26 +10,14 @@ Item {
     property alias barView: _barView
     property int noteWidth: 50
 
-    width: _barView.count * noteWidth
+    property var barLabel : barNumber
 
-    Text{
-        x: 5
-        color: Style.textColorMain
-        font.pointSize: 10
-        text: barNumber
-    }
-
-    // как вариант:
-    // определять что делегат последний и только тогда её показывать
-    // по нажатию автоматически вызывать диалог Add (или Add+Paste)
-//        RoundButton{
-//            x: parent.width+40
-    //        y: parent.height/2
-//            z: -10
-//        }
+    width: bar.notesCount() * noteWidth
 
     ListView{
         id: _barView
+
+//        leftMargin: parent.width/10
 
         orientation: ListView.Horizontal
         flickableDirection: Flickable.AutoFlickIfNeeded
@@ -38,36 +26,45 @@ Item {
         width: _root.width
         height: _root.height
 
-
-//        model: barModel
         model: _model
+
+        contentHeight: height*0.5
 
         delegate: NoteView{
             id: _note
             width: noteWidth
             height: _barView.height
+
+            Component.onCompleted: {
+                noteViewClicked.connect(_root.noteViewClicked)
+            }
         }
 
-        header: Rectangle{
-            id: _barLineStart
-            color: Style.imagesColorOverlay
-            width: 2
-            height: parent.height / 2
+        header: Item{
+            Text{
+                anchors.left: _barLineStart.right
+                anchors.leftMargin: _barLineStart.width
+                color: Style.textColorMain
+                font.pointSize: 10
+                text: barLabel
+            }
+            Rectangle{
+                id: _barLineStart
+                color: Style.imagesColorOverlay
+                width: noteWidth/25
+                height: noteWidth*1.75
+            }
         }
         footer: Rectangle{
             id: _barLineStop
             color: Style.imagesColorOverlay
-            width: 2
-            height: parent.height / 2
+            width: noteWidth/25
+            height: noteWidth*1.75
         }
-
-
     }
 
     ListModel{
         id: _model
-
-
     }
 
     Component.onCompleted: {
@@ -75,5 +72,11 @@ Item {
         {
             _model.append({"note": bar.noteQMLAt(noteIndex)})
         }
+    }
+
+    signal noteDelegateClicked(noteIndex: int)
+    function noteViewClicked(noteIndex)
+    {
+        _root.noteDelegateClicked(noteIndex)
     }
 }

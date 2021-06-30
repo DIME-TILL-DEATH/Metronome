@@ -20,6 +20,19 @@ namespace MusicalTypes
         Thirty_second_triplet = 24
     };
 
+    static QStringList noteOrder{
+        "Whole",
+        "Half",
+        "Quarter",
+        "Eight",
+        "Sixteenth",
+        "ThirtySecond",
+
+        "EightTriplet",
+        "SixteenthTriplet",
+        "ThirtySecondTriplet"
+    };
+
     static QHash<QString, MusicalTypes::NoteType> noteNames{
         {"Whole",           MusicalTypes::NoteType::Whole},
         {"Half",            MusicalTypes::NoteType::Half},

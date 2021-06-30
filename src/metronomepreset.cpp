@@ -1,4 +1,5 @@
 #include <QDebug>
+
 #include "metronomepreset.h"
 
 MetronomePreset::MetronomePreset()
@@ -7,16 +8,18 @@ MetronomePreset::MetronomePreset()
     m_patterns.push_back(MusicalPattern());
     m_patterns.push_back(MusicalPattern());
 
-    model1 = new MusicalPatternModel(m_patterns.at(0));
-    model2 = new MusicalPatternModel(m_patterns.at(1));
+    m_patternModels.push_back(new MusicalPatternModel(m_patterns.at(0)));
+    m_patternModels.push_back(new MusicalPatternModel(m_patterns.at(1)));
 
     setTempo(m_tempo);
 }
 
 MetronomePreset::~MetronomePreset()
 {
-    delete model1;
-    delete model2;
+    for(auto it : m_patternModels)
+    {
+        delete it;
+    }
 }
 
 MusicalPatternModel &MetronomePreset::pattern(quint16 id)
@@ -24,10 +27,9 @@ MusicalPatternModel &MetronomePreset::pattern(quint16 id)
     if(id > m_patterns.size()-1)
     {
         qWarning() << "Pattern with id: " << id << " doesn't exist! Returning pattern with id 0";
-//        return *m_patterns.at(0); // ну такое. Надо что-то поумнее
+        return *m_patternModels.at(0); // ну такое. Надо что-то поумнее
     }
-//    return *m_patterns.at(id);
-    return *model1;
+    return *m_patternModels.at(id);
 }
 
 bool MetronomePreset::setTempo(quint16 tempo)
@@ -84,7 +86,7 @@ bool MetronomePreset::addBar(const MusicalBar& newBar, quint16 barIndex, quint16
         qWarning() << "Trying to add bar. Pattern with index " << patternIndex << " is not availiable";
         return false;
     }
-    model1->addBar(newBar, barIndex);
+    m_patternModels.at(patternIndex)->addBar(newBar, barIndex);
     return true;
 }
 
@@ -95,6 +97,11 @@ bool MetronomePreset::removeBar(quint16 barIndex, quint16 patternIndex)
         qWarning() << "Trying to remove bar. Pattern with index " << patternIndex << " is not availiable";
         return false;
     }
-    model1->removeBar(barIndex);
+    m_patternModels.at(patternIndex)->removeBar(barIndex);
     return true;
+}
+
+void MetronomePreset::updateModel(quint16 patternIndex)
+{
+    m_patternModels.at(patternIndex)->updateModel();
 }

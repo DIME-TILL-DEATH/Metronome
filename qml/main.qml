@@ -12,18 +12,21 @@ ApplicationWindow {
     title: qsTr("Metronome")
 
 
-    SwipeView {
+    StackView {
         id: _swipeView
         anchors.fill: parent
-        interactive: false
 
-
-
-        MainPage {
+        property Component presetsPage : PresetsPage{
 
         }
 
-        PresetsPage {
+        property Item patternEditorPage : PatternEditorPage{
+
+        }
+
+        initialItem: MainPage {
+            id: _mainPage
+
         }
     }
 }

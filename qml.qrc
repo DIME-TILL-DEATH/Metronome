@@ -127,5 +127,9 @@
         <file>qml/Views/NoteViewer/NoteImage.qml</file>
         <file>qml/Functions.js</file>
         <file>qml/StyleSettings/Constants.qml</file>
+        <file>qml/Pages/PatternEditorPage.qml</file>
+        <file>qml/Views/NoteViewer/NoteButton.qml</file>
+        <file>qml/Views/NoteButtonView.qml</file>
+        <file>qml/Base/HighlightRectangle.qml</file>
     </qresource>
 </RCC>

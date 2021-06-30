@@ -1,5 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.3
+import QtQuick.Layouts 1.3
+
 import Views 1.0
 
 import StyleSettings 1.0
@@ -12,6 +14,8 @@ Item {
     property var patternModel
     property var selectedItemIndex
 
+    property alias patternViewer : _listView
+
     width: parent.width
     height: parent.height*0.3
 
@@ -19,8 +23,9 @@ Item {
         id: column
         spacing: 5
         anchors.fill: parent
-        clip: true
+//        clip: true
 
+        topPadding: 10
         Label{
             id: _mainLabel
             height: parent * 0.2
@@ -49,7 +54,7 @@ Item {
             boundsBehavior: Flickable.StopAtBounds
 
             width: _rootRectangle.width
-            height: _rootRectangle.height
+            height: _rootRectangle.height*0.45
 
             model: patternModel
 
@@ -117,7 +122,6 @@ Item {
                              NumberAnimation { property: "opacity"; to: 1; duration: Constants.animationTransitionInterval }
 //                             NumberAnimation { property: "width"; from: 0; to: width; duration: 250 }
                          }
-
             }
             addDisplaced: Transition {
                      NumberAnimation { properties: "x"; duration: Constants.animationTransitionInterval }
@@ -129,8 +133,8 @@ Item {
       id: _menuPopUp
 
       addItem.onTriggered: {
-
-          Metronome.addBar(selectedItemIndex)
+          _swipeView.patternEditorPage.editingBarIndex = selectedItemIndex
+          _swipeView.push(_swipeView.patternEditorPage)
       }
 
       removeItem.onTriggered: {
@@ -138,11 +142,7 @@ Item {
       }
     }
 
-    Component.onCompleted:
-    {
-        // даёт warning при старте, тк компонент-наследник ещё не создан
-        Functions.setNoteFlatIndex(_listView)
-    }
+
 
     Connections{
         target: Metronome

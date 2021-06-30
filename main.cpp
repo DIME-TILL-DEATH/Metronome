@@ -14,6 +14,8 @@
 #include "musicalnote.h"
 #include "musicalbar.h"
 
+#include "patterneditor.h"
+
 #include "metronome.h"
 
 int main(int argc, char *argv[])
@@ -26,7 +28,10 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 //------------------------------------------------------------------
     Metronome& metronome{Metronome::instance()}; // Singletone
+    PatternEditor editor;
+
     engine.rootContext()->setContextProperty("Metronome", &metronome);
+    engine.rootContext()->setContextProperty("PatternEditor", &editor);
     engine.rootContext()->setContextProperty("mainPattern", &metronome.pattern(0));
     engine.rootContext()->setContextProperty("secondaryPattern", &metronome.pattern(1));
 
@@ -34,6 +39,7 @@ int main(int argc, char *argv[])
 
     qRegisterMetaType<MusicalNote>("MusicalNote");
     qRegisterMetaType<MusicalBar>("MusicalBar");
+
 //---------------------------------------------------------------------
     engine.addImportPath(":/qml");
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
