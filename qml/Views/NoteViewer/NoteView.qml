@@ -8,18 +8,20 @@ import StyleSettings 1.0
 
 Item {
     id: root
+
     property var flatteredIndex
 
+    signal noteViewClicked(index: int)
+
+    opacity: _delegateArea.pressed ? 0.5 : 1
     state: ((flatteredIndex === Metronome.activeNoteIndex) & (!Metronome.isMetronomePlaying)) ?
               "selected" : "base"
 
-    opacity: _delegateArea.pressed ? 0.5 : 1
-
-    signal noteViewClicked(index: int)
     MouseArea{
         id: _delegateArea
+
         anchors.fill: root
-        z: -15
+//        z: -15
         propagateComposedEvents: true
 
         onClicked: {
@@ -28,12 +30,11 @@ Item {
     }
 
     ColumnLayout{
-//        spacing: 5
-
         anchors.fill: root
 
         NoteImage{
             id: _noteImage
+
             noteType: note.name
             Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
             Layout.fillHeight: false

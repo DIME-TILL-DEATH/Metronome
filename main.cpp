@@ -18,6 +18,9 @@
 
 #include "metronome.h"
 
+// for build without librarys
+#define WITH_MINIAUDIO 1
+
 int main(int argc, char *argv[])
 {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)

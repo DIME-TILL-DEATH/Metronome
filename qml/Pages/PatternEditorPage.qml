@@ -110,7 +110,7 @@ Page {
 
             model: mainPattern
             delegate: BarView{
-                property var margin : _backgroundRectangle.border.width*2
+                property int margin : _backgroundRectangle.border.width*2
 
                 barView.highlight: HighlightRectangle {visible: (index === _tumbler.currentIndex) ? true : false}
 

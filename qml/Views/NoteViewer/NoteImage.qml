@@ -9,22 +9,20 @@ import StyleSettings 1.0
 Rectangle {
     id: _imageNote
 
-    height: root.width
-    width: root.width
-    color: "transparent"
-
     property alias image: _internalImage
     property alias overlay: _overlay
     property alias blinkAnim: _blinkAnim
-
     property var noteType
 
+    height: root.width; width: root.width
+    color: "transparent"
 
     Image{
         id: _internalImage
-        anchors.fill: _imageNote
 
         property alias overlay : _overlay
+
+        anchors.fill: _imageNote
 
         // пока так, но решить вопрос с отрисовками триолей и связей
         source: {
@@ -43,12 +41,14 @@ Rectangle {
 
     ColorOverlay{
         id: _overlay
+
         anchors.fill: _internalImage
         source: _imageNote.image
         antialiasing: true
 
         SequentialAnimation on color{
             id: _blinkAnim
+
             loops: Animation.Infinite
             running: false
             ColorAnimation{

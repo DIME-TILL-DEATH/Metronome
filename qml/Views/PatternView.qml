@@ -3,7 +3,6 @@ import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.3
 
 import Views 1.0
-
 import StyleSettings 1.0
 
 import "../Functions.js" as Functions
@@ -21,13 +20,14 @@ Item {
 
     Column{
         id: column
+
         spacing: 5
         anchors.fill: parent
-//        clip: true
-
         topPadding: 10
+
         Label{
             id: _mainLabel
+
             height: parent * 0.2
             horizontalAlignment: Text.AlignHCenter
             anchors.horizontalCenter: parent.horizontalCenter
@@ -38,6 +38,7 @@ Item {
 
         Label{
             id: _auxLabel
+
             height: parent * 0.1
             horizontalAlignment: Text.AlignHCenter
             anchors.horizontalCenter: parent.horizontalCenter
@@ -64,6 +65,7 @@ Item {
                 opacity: _barArea.pressed ? 0.5 : 1
                 MouseArea{
                     id: _barArea
+
                     z: 10
                     anchors.fill: parent
                     propagateComposedEvents: true
@@ -71,6 +73,7 @@ Item {
                     // но весь функционал по выделению и перетаскиванию работает
                     // пока только так
                     pressAndHoldInterval: Constants.pressAndHoldTime
+
                     onPressAndHold: {
                         _menuPopUp.mainMenu.popup(mapToItem(_rootRectangle, mouseX, mouseY))
                         selectedItemIndex = index
@@ -81,6 +84,7 @@ Item {
 
             MouseArea{
                 id: _emptySpace
+
                 z: -10
                 anchors.fill: parent
                 propagateComposedEvents: true
@@ -88,11 +92,7 @@ Item {
                 pressAndHoldInterval: Constants.pressAndHoldTime
                 onPressAndHold: {
                     _menuPopUp.mainMenu.popup( mouseX, mouseY)
-//                    var itemCoords = mapToItem(_listView, mouseX, mouseY)
-//                    console.log(itemCoords)
-//                    selectedItemIndex = _listView.indexAt(itemCoords)
-//                    console.log(selectedItemIndex)
-//                    _menuPopUp.state = (selectedItemIndex === -1) ? "onEmptySpace" : "onExistingBar"
+
                     if(selectedItemIndex === -1)
                     {
                         _menuPopUp.state = "onEmptySpace"
@@ -142,14 +142,12 @@ Item {
       }
     }
 
-
-
     Connections{
         target: Metronome
+
         function onSetTimerIntervals()
         {
             Functions.setNoteFlatIndex(_listView)
-
         }
     }
 }

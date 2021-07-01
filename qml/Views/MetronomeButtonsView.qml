@@ -12,25 +12,21 @@ Item {
 
     Grid {
         id: _grid
+
         anchors.fill: parent
+        padding: 5; spacing: 5
 
-        padding: 5
-
-        rows: 3
-        columns: 2
+        rows: 3; columns: 2
 
         horizontalItemAlignment: Grid.AlignHCenter
         verticalItemAlignment: Grid.AlignVCenter
 
-        spacing: 5
 
         BaseControlButton {
-            id: _btnLoops
             displayText: "Loop"
         }
 
         BaseControlButton {
-            id: _btnTimer
             displayText: "00s"
         }
 
@@ -71,12 +67,10 @@ Item {
         }
 
         BaseControlButton {
-
             displayText: "+|-"
         }
 
         BaseControlButton {
-            id: _btnMixer
             displayText: "Mixer"
         }
     }

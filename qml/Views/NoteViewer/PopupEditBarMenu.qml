@@ -10,12 +10,12 @@ Item{
     property alias copyItem:    _itemCopy
     property alias pasteItem:   _itemPaste
     property alias removeItem:  _itemRemove
+
     Menu{
       id: _menu
-      closePolicy: Popup.CloseOnPressOutside | Popup.CloseOnEscape
-
 
       width: Functions.getMenuWidthByItems(_menu)
+      closePolicy: Popup.CloseOnPressOutside | Popup.CloseOnEscape
 
       MenuItem {
           id: _itemAdd

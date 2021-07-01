@@ -18,11 +18,11 @@ Page {
         id: _headerRectangle
 
         height: parent.height / 15
-
         radius: 5
 
-        border.color: "white"
-        border.width: 1
+        border{ color: "white"
+                width: 1
+        }
 
         gradient: Gradient{
             GradientStop{ position: 0.0; color: "skyblue"}
@@ -31,13 +31,14 @@ Page {
 
         ToolButton{
             anchors.left: parent.left
-            width: parent.width / 10
-            height: parent.height
 
+            width: parent.width / 10; height: parent.height
 
-            icon.source: Resources.interfaceElements.menuIcon
-            icon.height: parent.height * 0.4
-            icon.width: parent.height * 0.4
+            icon{
+                source: Resources.interfaceElements.menuIcon
+                height: parent.height * 0.4
+                width: parent.height * 0.4
+            }
 
             onClicked: {
                 _swipeView.pop()
@@ -53,7 +54,5 @@ Page {
             font.pixelSize: Qt.application.font.pixelSize * 2
         }
     }
-
-
 }
 

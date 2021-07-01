@@ -4,6 +4,7 @@ import StyleSettings 1.0
 
 Gradient{
     property alias _animation : _btnAnim.running
+
     GradientStop{ position: 0.0; color: "grey"}
     GradientStop{
         position: 1.0
