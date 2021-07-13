@@ -7,8 +7,9 @@
 #include <QAudioOutput>
 
 #include <QElapsedTimer>
-#include <QString>
+#include <QHash>
 
+#include "musicaltypes.h"
 #include "soloud.h"
 #include "soloud_wav.h"
 
@@ -20,15 +21,20 @@ public:
     ~SoundEngine();
 
 public slots:
-    void playMetronomeSound(quint16 activeNoteIndex);
+    void playMetronomeSound(quint16 barIndex, quint16 noteIndex, MusicalTypes::MetronomeEvents event);
 
 signals:
 
 private:
-//    QSoundEffect baseSound{this};
-
     SoLoud::Soloud m_engineSoloud;
+
     SoLoud::Wav m_waveMetronome;
+
+    QHash<MusicalTypes::MetronomeEvents, SoLoud::Wav> m_sounds{
+        {MusicalTypes::MetronomeEvents::MetronomeClick, {}},
+        {MusicalTypes::MetronomeEvents::MetronomeAccentedClick, {}},
+        {MusicalTypes::MetronomeEvents::PatternClick, {}}
+    };
 
     QElapsedTimer elapsedTimer;
 };

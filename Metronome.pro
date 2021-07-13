@@ -8,6 +8,41 @@ CONFIG += c++11
 INCLUDEPATH += $$PWD/include
 
 HEADERS += \
+    ../../C++/SoLoud/include/soloud.h \
+    ../../C++/SoLoud/include/soloud_audiosource.h \
+    ../../C++/SoLoud/include/soloud_bassboostfilter.h \
+    ../../C++/SoLoud/include/soloud_biquadresonantfilter.h \
+    ../../C++/SoLoud/include/soloud_bus.h \
+    ../../C++/SoLoud/include/soloud_c.h \
+    ../../C++/SoLoud/include/soloud_dcremovalfilter.h \
+    ../../C++/SoLoud/include/soloud_echofilter.h \
+    ../../C++/SoLoud/include/soloud_error.h \
+    ../../C++/SoLoud/include/soloud_fader.h \
+    ../../C++/SoLoud/include/soloud_fft.h \
+    ../../C++/SoLoud/include/soloud_fftfilter.h \
+    ../../C++/SoLoud/include/soloud_file.h \
+    ../../C++/SoLoud/include/soloud_file_hack_off.h \
+    ../../C++/SoLoud/include/soloud_file_hack_on.h \
+    ../../C++/SoLoud/include/soloud_filter.h \
+    ../../C++/SoLoud/include/soloud_flangerfilter.h \
+    ../../C++/SoLoud/include/soloud_freeverbfilter.h \
+    ../../C++/SoLoud/include/soloud_internal.h \
+    ../../C++/SoLoud/include/soloud_lofifilter.h \
+    ../../C++/SoLoud/include/soloud_misc.h \
+    ../../C++/SoLoud/include/soloud_monotone.h \
+    ../../C++/SoLoud/include/soloud_noise.h \
+    ../../C++/SoLoud/include/soloud_openmpt.h \
+    ../../C++/SoLoud/include/soloud_queue.h \
+    ../../C++/SoLoud/include/soloud_robotizefilter.h \
+    ../../C++/SoLoud/include/soloud_sfxr.h \
+    ../../C++/SoLoud/include/soloud_speech.h \
+    ../../C++/SoLoud/include/soloud_tedsid.h \
+    ../../C++/SoLoud/include/soloud_thread.h \
+    ../../C++/SoLoud/include/soloud_vic.h \
+    ../../C++/SoLoud/include/soloud_vizsn.h \
+    ../../C++/SoLoud/include/soloud_wav.h \
+    ../../C++/SoLoud/include/soloud_waveshaperfilter.h \
+    ../../C++/SoLoud/include/soloud_wavstream.h \
     include/musicalbar.h \
     include/musicalpattern.h \
     include/musicaltypes.h \
@@ -68,41 +103,6 @@ android{
 # i can't build library for android now
 
 HEADERS += \
-    ../../C++/SoLoud/include/soloud.h \
-    ../../C++/SoLoud/include/soloud_audiosource.h \
-    ../../C++/SoLoud/include/soloud_bassboostfilter.h \
-    ../../C++/SoLoud/include/soloud_biquadresonantfilter.h \
-    ../../C++/SoLoud/include/soloud_bus.h \
-    ../../C++/SoLoud/include/soloud_c.h \
-    ../../C++/SoLoud/include/soloud_dcremovalfilter.h \
-    ../../C++/SoLoud/include/soloud_echofilter.h \
-    ../../C++/SoLoud/include/soloud_error.h \
-    ../../C++/SoLoud/include/soloud_fader.h \
-    ../../C++/SoLoud/include/soloud_fft.h \
-    ../../C++/SoLoud/include/soloud_fftfilter.h \
-    ../../C++/SoLoud/include/soloud_file.h \
-    ../../C++/SoLoud/include/soloud_file_hack_off.h \
-    ../../C++/SoLoud/include/soloud_file_hack_on.h \
-    ../../C++/SoLoud/include/soloud_filter.h \
-    ../../C++/SoLoud/include/soloud_flangerfilter.h \
-    ../../C++/SoLoud/include/soloud_freeverbfilter.h \
-    ../../C++/SoLoud/include/soloud_internal.h \
-    ../../C++/SoLoud/include/soloud_lofifilter.h \
-    ../../C++/SoLoud/include/soloud_misc.h \
-    ../../C++/SoLoud/include/soloud_monotone.h \
-    ../../C++/SoLoud/include/soloud_noise.h \
-    ../../C++/SoLoud/include/soloud_openmpt.h \
-    ../../C++/SoLoud/include/soloud_queue.h \
-    ../../C++/SoLoud/include/soloud_robotizefilter.h \
-    ../../C++/SoLoud/include/soloud_sfxr.h \
-    ../../C++/SoLoud/include/soloud_speech.h \
-    ../../C++/SoLoud/include/soloud_tedsid.h \
-    ../../C++/SoLoud/include/soloud_thread.h \
-    ../../C++/SoLoud/include/soloud_vic.h \
-    ../../C++/SoLoud/include/soloud_vizsn.h \
-    ../../C++/SoLoud/include/soloud_wav.h \
-    ../../C++/SoLoud/include/soloud_waveshaperfilter.h \
-    ../../C++/SoLoud/include/soloud_wavstream.h \
     ../../C++/SoLoud/src/audiosource/speech/darray.h \
     ../../C++/SoLoud/src/audiosource/speech/klatt.h \
     ../../C++/SoLoud/src/audiosource/speech/resonator.h \

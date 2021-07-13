@@ -38,14 +38,14 @@ public:
     // а нужна ли версия с возвращаемой ссылкой?
     Q_INVOKABLE MusicalNote noteQMLAt(quint16 position);
 
-    const std::pair<quint8, MusicalTypes::NoteType> &timeSignature() const;
-    void setTimeSignature(const std::pair<quint8, MusicalTypes::NoteType> &newTimeSignature);
+//    const std::pair<quint8, quint8> &timeSignature() const;
+//    void setTimeSignature(const std::pair<quint8, quint8> &newTimeSignature);
 
     const std::vector<MusicalNote> &notePattern() const;
 
 private:
     std::vector<MusicalNote> m_notePattern;
-    std::pair<quint8, MusicalTypes::NoteType> m_timeSignature {4, MusicalTypes::NoteType::Quarter};
+//    std::pair<quint8, quint8> m_timeSignature {4, 4};
 
 };
 Q_DECLARE_METATYPE(MusicalBar)

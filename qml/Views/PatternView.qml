@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.3
 
+import Base 1.0
 import Views 1.0
 import StyleSettings 1.0
 
@@ -12,6 +13,7 @@ Item {
 
     property var patternModel
     property var selectedItemIndex
+    property var clickedItemIndex
 
     property alias patternViewer : _listView
 
@@ -59,40 +61,43 @@ Item {
 
             model: patternModel
 
-            delegate: BarView{
-                height: _listView.height
-
-                opacity: _barArea.pressed ? 0.5 : 1
-                MouseArea{
-                    id: _barArea
-
-                    z: 10
-                    anchors.fill: parent
-                    propagateComposedEvents: true
-                    // Два почти одинаковых MouseArea это убого,
-                    // но весь функционал по выделению и перетаскиванию работает
-                    // пока только так
-                    pressAndHoldInterval: Constants.pressAndHoldTime
-
-                    onPressAndHold: {
-                        _menuPopUp.mainMenu.popup(mapToItem(_rootRectangle, mouseX, mouseY))
-                        selectedItemIndex = index
-                        _menuPopUp.state = (selectedItemIndex === -1) ? "onEmptySpace" : "onExistingBar"
-                    }
+            currentIndex: Metronome.activeBarIndex
+            highlight: Rectangle{
+                color: "transparent"
+                radius: 10
+                z: -10
+                border{
+                    width: 2
+                    color: Style.imagesColorOverlayHighlighted
                 }
             }
 
-            MouseArea{
-                id: _emptySpace
+            delegate: BarView{
+                height: _listView.height
 
-                z: -10
+//                opacity: _barArea.pressed  ? 0.5 : 1
+//                MouseArea{
+//                    id: _barArea
+
+////                    z: -20
+//                    anchors.fill: parent
+//                    propagateComposedEvents: true
+//                }
+            }
+
+            MouseArea{
+                id: _listViewArea
+
+                z: -5
                 anchors.fill: parent
                 propagateComposedEvents: true
 
                 pressAndHoldInterval: Constants.pressAndHoldTime
-                onPressAndHold: {
-                    _menuPopUp.mainMenu.popup( mouseX, mouseY)
 
+                onPressAndHold: {
+                    _menuPopUp.mainMenu.popup(mouseX, mouseY)
+
+                    console.log(mapToGlobal(mouseX, mouseY))
                     if(selectedItemIndex === -1)
                     {
                         _menuPopUp.state = "onEmptySpace"
@@ -101,6 +106,7 @@ Item {
                     else
                     {
                         _menuPopUp.state = "onExistingBar"
+                        selectedItemIndex = _listView.indexAt(mouseX+_listView.contentX, mouseY)
                     }
                 }
             }
@@ -142,13 +148,13 @@ Item {
       }
     }
 
-    Connections{
-        target: Metronome
+//    Connections{
+//        target: Metronome
 
-        function onSetTimerIntervals()
-        {
-            Functions.setNoteFlatIndex(_listView)
-        }
-    }
+//        function onSetTimerIntervals()
+//        {
+//            Functions.setNoteFlatIndex(_listView)
+//        }
+//    }
 }
 

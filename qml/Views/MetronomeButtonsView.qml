@@ -60,6 +60,30 @@ Item {
                 elide: Text.ElideRight
             }
 
+//            Canvas {
+//                     id: canvas
+//                     x: control.width - width - control.rightPadding
+//                     y: control.topPadding + (control.availableHeight - height) / 2
+//                     width: 12
+//                     height: 8
+//                     contextType: "2d"
+
+//                     Connections {
+//                         target: control
+//                         function onPressedChanged() { canvas.requestPaint(); }
+//                     }
+
+//                     onPaint: {
+//                         context.reset();
+//                         context.moveTo(0, 0);
+//                         context.lineTo(width, 0);
+//                         context.lineTo(width / 2, height);
+//                         context.closePath();
+//                         context.fillStyle = control.pressed ? "#17a81a" : "#21be2b";
+//                         context.fill();
+//                     }
+//                 }
+
             onClicked: {
                 Metronome.playStopButtonClick()
 

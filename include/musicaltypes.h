@@ -2,12 +2,15 @@
 #define MUSICALTYPES_H
 
 #include <QHash>
+#include <QObject>
+
 namespace MusicalTypes
 {
 
     static constexpr quint16 OneMinute{60000};
 
-    enum class NoteType : quint8 {
+    enum class NoteType : quint8
+    {
         Whole = 1,
         Half = 2,
         Quarter = 4,
@@ -20,7 +23,8 @@ namespace MusicalTypes
         Thirty_second_triplet = 24
     };
 
-    static QStringList noteOrder{
+    static QStringList noteOrder
+    {
         "Whole",
         "Half",
         "Quarter",
@@ -33,7 +37,8 @@ namespace MusicalTypes
         "ThirtySecondTriplet"
     };
 
-    static QHash<QString, MusicalTypes::NoteType> noteNames{
+    static QHash<QString, MusicalTypes::NoteType> noteNames
+    {
         {"Whole",           MusicalTypes::NoteType::Whole},
         {"Half",            MusicalTypes::NoteType::Half},
         {"Quarter",         MusicalTypes::NoteType::Quarter},
@@ -45,6 +50,24 @@ namespace MusicalTypes
         {"SixteenthTriplet",    MusicalTypes::NoteType::Sixteenth_triplet},
         {"ThirtySecondTriplet", MusicalTypes::NoteType::Thirty_second_triplet}
     };
+
+    // Быть может всё же создать объект MetronomeEvent????
+    enum MetronomeEvents : quint32
+    {
+        MetronomeClick,
+        MetronomeAccentedClick,
+        MetronomeSubClick,      // sub division click
+        PatternClick
+    };
+
+    static QHash<QString, MetronomeEvents> metronomeEventsNames
+    {
+        {"Click",         MetronomeEvents::MetronomeClick},
+        {"AccentedClick", MetronomeEvents::MetronomeAccentedClick},
+        {"PatternClick",  MetronomeEvents::PatternClick}
+    };
 }
+
+Q_DECLARE_METATYPE(MusicalTypes::MetronomeEvents)
 
 #endif // MUSICALTYPES_H

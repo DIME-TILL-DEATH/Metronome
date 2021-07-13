@@ -76,10 +76,10 @@ Page {
         }
     }
 
-    Component.onCompleted:
-    {
-        // даёт warning при старте, тк компонент-наследник ещё не создан
-        Functions.setNoteFlatIndex(_patternview1.patternViewer)
-        Functions.setNoteFlatIndex(_patternview2.patternViewer)
-    }
+//    Component.onCompleted:
+//    {
+//        // даёт warning при старте, тк компонент-наследник ещё не создан
+//        Functions.setNoteFlatIndex(_patternview1.patternViewer)
+//        Functions.setNoteFlatIndex(_patternview2.patternViewer)
+//    }
 }

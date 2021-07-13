@@ -19,7 +19,7 @@ MusicalBar::MusicalBar(std::vector<MusicalNote> pattern)
 MusicalBar::MusicalBar(const MusicalBar &bar)
 {
     m_notePattern = bar.m_notePattern;
-    m_timeSignature = bar.m_timeSignature;
+//    m_timeSignature = bar.m_timeSignature;
 }
 
 MusicalBar::~MusicalBar()
@@ -30,7 +30,7 @@ MusicalBar::~MusicalBar()
 MusicalBar &MusicalBar::operator=(const MusicalBar &bar)
 {
     m_notePattern = bar.m_notePattern;
-    m_timeSignature = bar.m_timeSignature;
+//    m_timeSignature = bar.m_timeSignature;
     return *this;
 }
 
@@ -168,15 +168,15 @@ MusicalNote MusicalBar::noteQMLAt(quint16 position)
     return m_notePattern.at(position);
 }
 
-const std::pair<quint8, MusicalTypes::NoteType> &MusicalBar::timeSignature() const
-{
-    return m_timeSignature;
-}
+//const std::pair<quint8, quint8> &MusicalBar::timeSignature() const
+//{
+//    return m_timeSignature;
+//}
 
-void MusicalBar::setTimeSignature(const std::pair<quint8, MusicalTypes::NoteType> &newTimeSignature)
-{
-    m_timeSignature = newTimeSignature;
-}
+//void MusicalBar::setTimeSignature(const std::pair<quint8, quint8> &newTimeSignature)
+//{
+//    m_timeSignature = newTimeSignature;
+//}
 
 const std::vector<MusicalNote> &MusicalBar::notePattern() const
 {

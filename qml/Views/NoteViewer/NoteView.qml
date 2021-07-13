@@ -9,25 +9,28 @@ import StyleSettings 1.0
 Item {
     id: root
 
-    property var flatteredIndex
+//    property var flatteredIndex
 
     signal noteViewClicked(index: int)
 
-    opacity: _delegateArea.pressed ? 0.5 : 1
-    state: ((flatteredIndex === Metronome.activeNoteIndex) & (!Metronome.isMetronomePlaying)) ?
-              "selected" : "base"
+//    opacity: _delegateArea.pressed ? 0.5 : 1
 
-    MouseArea{
-        id: _delegateArea
+    state: "base"
 
-        anchors.fill: root
-//        z: -15
-        propagateComposedEvents: true
+//    state: ((flatteredIndex === Metronome.activeNoteIndex) & (!Metronome.isMetronomePlaying)) ?
+//              "selected" : "base"
 
-        onClicked: {
-            root.noteViewClicked(index)
-        }
-    }
+//    MouseArea{
+//        id: _delegateArea
+
+//        anchors.fill: root
+////        z: -15
+//        propagateComposedEvents: true
+
+//        onClicked: {
+//            root.noteViewClicked(index)
+//        }
+//    }
 
     ColumnLayout{
         anchors.fill: root
@@ -73,26 +76,26 @@ Item {
         }
     ]
 
-    Connections{
-        target: Metronome
-        function onActiveNoteIndexChanged()
-        {
-            if(flatteredIndex === Metronome.activeNoteIndex)
-            {
-                state = "playing"
-            }
-            else
-            {
-                state = "base"
-            }
-        }
+//    Connections{
+//        target: Metronome
+//        function onActiveNoteIndexChanged()
+//        {
+//            if(flatteredIndex === Metronome.activeNoteIndex)
+//            {
+//                state = "playing"
+//            }
+//            else
+//            {
+//                state = "base"
+//            }
+//        }
 
-        function onIsMetronomePlayingChanged()
-        {
-            if((!Metronome.isMetronomePlaying) & (flatteredIndex === Metronome.activeNoteIndex))
-            {
-               state = "selected"
-            }
-        }
-    }
+//        function onIsMetronomePlayingChanged()
+//        {
+//            if((!Metronome.isMetronomePlaying) & (flatteredIndex === Metronome.activeNoteIndex))
+//            {
+//               state = "selected"
+//            }
+//        }
+//    }
 }

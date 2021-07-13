@@ -143,6 +143,11 @@ std::vector<MusicalNote> MusicalPattern::notePattern()
     return flatteredNotePattern;
 }
 
+std::vector<MusicalBar> MusicalPattern::barPattern()
+{
+    return m_barPattern;
+}
+
 quint16 MusicalPattern::barsCount()
 {
     return m_barPattern.size();

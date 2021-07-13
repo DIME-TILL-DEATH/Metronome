@@ -35,6 +35,7 @@ Metronome::~Metronome()
     soundThread->quit();
 }
 
+
 Metronome &Metronome::instance()
 {
     static Metronome instance;
@@ -46,9 +47,11 @@ MusicalPatternModel &Metronome::pattern(quint16 id)
     return m_activePreset.pattern(id);
 }
 
-void Metronome::mainPatternTimerEvent(quint16 activeNoteIndex)
+void Metronome::mainPatternTimerEvent(quint16 barIndex, quint16 noteIndex, MusicalTypes::MetronomeEvents event)
 {
-    m_activeNoteIndex = activeNoteIndex;
+    m_activeBarIndex = barIndex;
+    m_activeNoteIndex = noteIndex;
+
     emit activeNoteIndexChanged();
 }
 
@@ -64,6 +67,11 @@ bool Metronome::isMetronomePlaying()
     return timersEngine->isTimersCounting();
 }
 
+quint16 Metronome::activeBarIndex() const
+{
+    return m_activeBarIndex;
+}
+
 quint16 Metronome::activeNoteIndex()
 {
     return m_activeNoteIndex;
@@ -71,7 +79,8 @@ quint16 Metronome::activeNoteIndex()
 
 void Metronome::playStopButtonClick()
 {
-    emit setTimerIntervals(m_activePreset.patternTimeIntervals());
+//    emit setTimerIntervals(m_activePreset.timeIntervals());
+    emit setTimerIntervals(m_activePreset.timings());
     emit startStopPlaying();
     emit activeNoteIndexChanged();
 }
@@ -79,7 +88,8 @@ void Metronome::playStopButtonClick()
 void Metronome::tempoChanged(quint16 tempo)
 {
     m_activePreset.setTempo(tempo);
-    emit setTimerIntervals(m_activePreset.patternTimeIntervals());
+//    emit setTimerIntervals(m_activePreset.timeIntervals());
+    emit setTimerIntervals(m_activePreset.timings());
 }
 
 void Metronome::addBar(quint16 barIndex, quint16 patternIndex, MusicalBar bar)

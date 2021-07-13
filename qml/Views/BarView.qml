@@ -2,13 +2,16 @@ import QtQuick 2.10
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 
+import Base 1.0
 import StyleSettings 1.0
+import QtGraphicalEffects 1.0
 
 Item {
     id: _root
 
     property alias barView: _barView
     property int noteWidth: 50
+    property int barLinesWidth: noteWidth/25
     property var barLabel : barNumber
 
     signal noteDelegateClicked(noteIndex: int)
@@ -25,7 +28,7 @@ Item {
         }
     }
 
-    width: bar.notesCount() * noteWidth
+    width: bar.notesCount() * noteWidth + barLinesWidth
 
     ListView{
         id: _barView
@@ -37,7 +40,16 @@ Item {
         width: _root.width
         height: _root.height
 
+        interactive: false
+
         model: _model
+
+        currentIndex: Metronome.activeNoteIndex
+        highlight: HighlightRectangle{
+            visible: (index === Metronome.activeBarIndex)
+        }
+
+
 
         delegate: NoteView{
             id: _note
@@ -62,7 +74,7 @@ Item {
             Rectangle{
                 id: _barLineStart
 
-                width: noteWidth/25; height: noteWidth*1.75
+                width: barLinesWidth; height: noteWidth*1.75
                 color: Style.imagesColorOverlay
             }
         }
@@ -70,7 +82,7 @@ Item {
         footer: Rectangle{
             id: _barLineStop
 
-            width: noteWidth/25; height: noteWidth*1.75
+            width: barLinesWidth; height: noteWidth*1.75
             color: Style.imagesColorOverlay
         }
     }

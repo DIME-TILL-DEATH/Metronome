@@ -38,10 +38,10 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("mainPattern", &metronome.pattern(0));
     engine.rootContext()->setContextProperty("secondaryPattern", &metronome.pattern(1));
 
-//    MusicalPatternModel::registerMe("CoreApplicationModule");
-
     qRegisterMetaType<MusicalNote>("MusicalNote");
     qRegisterMetaType<MusicalBar>("MusicalBar");
+    qRegisterMetaType<MusicalTypes::MetronomeEvents>("MetronomeEvents");
+    qRegisterMetaType<TimingMap>("TimingMap");
 
 //---------------------------------------------------------------------
     engine.addImportPath(":/qml");
