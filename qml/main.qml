@@ -6,24 +6,20 @@ import Pages 1.0
 ApplicationWindow {
     id: _rootWindow
 
+    // for windows debuging
     width: 1080 * 0.4 // Google pixel 4 width
     height: 2280 * 0.4 // Google pixel 4 height
+
     visible: true
     title: qsTr("Metronome")
 
-
-    SwipeView {
+    StackView {
         id: _swipeView
         anchors.fill: parent
-        interactive: false
 
+        property Component presetsPage : PresetsPage{}
+        property Item patternEditorPage : PatternEditorPage{}
 
-
-        MainPage {
-
-        }
-
-        PresetsPage {
-        }
+        initialItem: MainPage {}
     }
 }

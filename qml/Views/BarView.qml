@@ -2,31 +2,33 @@ import QtQuick 2.10
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 
+import Base 1.0
 import StyleSettings 1.0
+import QtGraphicalEffects 1.0
 
 Item {
     id: _root
 
     property alias barView: _barView
     property int noteWidth: 50
+    property int barLinesWidth: noteWidth/25
+    property var barLabel : barNumber
 
-    width: _barView.count * noteWidth
+    signal noteDelegateClicked(noteIndex: int)
 
-    Text{
-        x: 5
-        color: Style.textColorMain
-        font.pointSize: 10
-        text: barNumber
+    function noteViewClicked(noteIndex)
+    {
+        _root.noteDelegateClicked(noteIndex)
     }
 
-    // как вариант:
-    // определять что делегат последний и только тогда её показывать
-    // по нажатию автоматически вызывать диалог Add (или Add+Paste)
-//        RoundButton{
-//            x: parent.width+40
-    //        y: parent.height/2
-//            z: -10
-//        }
+    Component.onCompleted: {
+        for(var noteIndex=0; noteIndex < bar.notesCount(); noteIndex++)
+        {
+            _model.append({"note": bar.noteQMLAt(noteIndex)})
+        }
+    }
+
+    width: bar.notesCount() * noteWidth + barLinesWidth
 
     ListView{
         id: _barView
@@ -38,42 +40,53 @@ Item {
         width: _root.width
         height: _root.height
 
+        interactive: false
 
-//        model: barModel
         model: _model
+
+        currentIndex: Metronome.activeNoteIndex
+        highlight: HighlightRectangle{
+            visible: (index === Metronome.activeBarIndex)
+        }
+
+
 
         delegate: NoteView{
             id: _note
             width: noteWidth
             height: _barView.height
+
+            Component.onCompleted: {
+                noteViewClicked.connect(_root.noteViewClicked)
+            }
         }
 
-        header: Rectangle{
-            id: _barLineStart
-            color: Style.imagesColorOverlay
-            width: 2
-            height: parent.height / 2
+        header: Item{
+            Text{
+                anchors{ left: _barLineStart.right
+                         leftMargin: _barLineStart.width
+                }
+
+                color: Style.textColorMain
+                font.pointSize: 10
+                text: barLabel
+            }
+            Rectangle{
+                id: _barLineStart
+
+                width: barLinesWidth; height: noteWidth*1.75
+                color: Style.imagesColorOverlay
+            }
         }
+
         footer: Rectangle{
             id: _barLineStop
+
+            width: barLinesWidth; height: noteWidth*1.75
             color: Style.imagesColorOverlay
-            width: 2
-            height: parent.height / 2
-        }
-
-
-    }
-
-    ListModel{
-        id: _model
-
-
-    }
-
-    Component.onCompleted: {
-        for(var noteIndex=0; noteIndex < bar.notesCount(); noteIndex++)
-        {
-            _model.append({"note": bar.noteQMLAt(noteIndex)})
         }
     }
+
+    ListModel{ id: _model }
+
 }

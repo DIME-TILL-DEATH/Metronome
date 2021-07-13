@@ -8,44 +8,53 @@ import StyleSettings 1.0
 
 Item {
     id: root
-    property var flatteredIndex
 
-    state: ((flatteredIndex === Metronome.activeNoteIndex) & (!Metronome.isMetronomePlaying)) ?
-              "selected" : "base"
+//    property var flatteredIndex
 
-    opacity: _delegateArea.pressed ? 0.5 : 1
+    signal noteViewClicked(index: int)
 
-    MouseArea{
-        id: _delegateArea
-        anchors.fill: root
-//        z: -15
-        propagateComposedEvents: true
+//    opacity: _delegateArea.pressed ? 0.5 : 1
 
-        onClicked: {
-            console.log(flatteredIndex)
-        }
-    }
+    state: "base"
+
+//    state: ((flatteredIndex === Metronome.activeNoteIndex) & (!Metronome.isMetronomePlaying)) ?
+//              "selected" : "base"
+
+//    MouseArea{
+//        id: _delegateArea
+
+//        anchors.fill: root
+////        z: -15
+//        propagateComposedEvents: true
+
+//        onClicked: {
+//            root.noteViewClicked(index)
+//        }
+//    }
 
     ColumnLayout{
-        x:5
-        y: 30
-        spacing: 5
+        anchors.fill: root
 
         NoteImage{
             id: _noteImage
+
             noteType: note.name
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+            Layout.fillHeight: false
         }
 
         Text{
             text: note.line1
             color: Style.textColorMain
-            horizontalAlignment: Text.AlignHCenter
+            Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
+            Layout.fillHeight: false
         }
 
         Text{
             text: note.line2
             color: Style.textColorMain
-            horizontalAlignment: Text.AlignHCenter
+            Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
+            Layout.fillHeight: false
         }
     }
 
@@ -67,26 +76,26 @@ Item {
         }
     ]
 
-    Connections{
-        target: Metronome
-        function onActiveNoteIndexChanged()
-        {
-            if(flatteredIndex === Metronome.activeNoteIndex)
-            {
-                state = "playing"
-            }
-            else
-            {
-                state = "base"
-            }
-        }
+//    Connections{
+//        target: Metronome
+//        function onActiveNoteIndexChanged()
+//        {
+//            if(flatteredIndex === Metronome.activeNoteIndex)
+//            {
+//                state = "playing"
+//            }
+//            else
+//            {
+//                state = "base"
+//            }
+//        }
 
-        function onIsMetronomePlayingChanged()
-        {
-            if((!Metronome.isMetronomePlaying) & (flatteredIndex === Metronome.activeNoteIndex))
-            {
-               state = "selected"
-            }
-        }
-    }
+//        function onIsMetronomePlayingChanged()
+//        {
+//            if((!Metronome.isMetronomePlaying) & (flatteredIndex === Metronome.activeNoteIndex))
+//            {
+//               state = "selected"
+//            }
+//        }
+//    }
 }

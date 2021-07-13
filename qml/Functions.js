@@ -1,16 +1,16 @@
-function setNoteFlatIndex(listView)
-{
-    var notePosition = 0;
+//function setNoteFlatIndex(listView)
+//{
+//    var notePosition = 0;
 
-    for(var barIndex = 0; barIndex < listView.count; barIndex++)
-    {
-        for(var noteInBar = 0; noteInBar < listView.itemAtIndex(barIndex).barView.count; noteInBar++)
-        {
-            _listView.itemAtIndex(barIndex).barView.itemAtIndex(noteInBar).flatteredIndex = notePosition
-            notePosition++
-        }
-    }
-}
+//    for(var barIndex = 0; barIndex < listView.count; barIndex++)
+//    {
+//        for(var noteInBar = 0; noteInBar < listView.itemAtIndex(barIndex).barView.count; noteInBar++)
+//        {
+//            listView.itemAtIndex(barIndex).barView.itemAtIndex(noteInBar).flatteredIndex = notePosition
+//            notePosition++
+//        }
+//    }
+//}
 
 function getMenuWidthByItems(menu) {
     var result = 0;
@@ -21,4 +21,10 @@ function getMenuWidthByItems(menu) {
         padding = Math.max(item.padding, padding);
     }
     return result + padding * 2;
+}
+
+function listProperty(item)
+{
+    for (var p in item)
+    console.log(p + ": " + item[p]);
 }

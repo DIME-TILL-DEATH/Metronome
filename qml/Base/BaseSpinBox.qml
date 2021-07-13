@@ -10,10 +10,11 @@ SpinBox{
     property int indicatorWidth: _control.width/4
     property int delay: 50
 
-    font.pointSize: fontsize
 
     width: parent.width * 0.5 * 0.975
     height: parent.height * 0.5 * 0.9
+
+    font.pointSize: fontsize
 
     editable: true
 
@@ -49,12 +50,14 @@ SpinBox{
          x: parent.width - width
          width: indicatorWidth
          height: parent.height
+
          fontSize: fontsize
          displayText: "+"
 
          autoRepeat: true
          autoRepeatDelay: delay*2
          autoRepeatInterval: delay
+
          onClicked: { value++ }
     }
 
@@ -62,12 +65,14 @@ SpinBox{
          x: 0
          width: indicatorWidth
          height: parent.height
+
          fontSize: fontsize
          displayText: "-"
 
          autoRepeat: true
          autoRepeatDelay: delay*2
          autoRepeatInterval: delay
+
          onClicked: { value-- }
     }
 }

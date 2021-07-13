@@ -19,7 +19,7 @@ MusicalBar::MusicalBar(std::vector<MusicalNote> pattern)
 MusicalBar::MusicalBar(const MusicalBar &bar)
 {
     m_notePattern = bar.m_notePattern;
-    m_timeSignature = bar.m_timeSignature;
+//    m_timeSignature = bar.m_timeSignature;
 }
 
 MusicalBar::~MusicalBar()
@@ -30,7 +30,7 @@ MusicalBar::~MusicalBar()
 MusicalBar &MusicalBar::operator=(const MusicalBar &bar)
 {
     m_notePattern = bar.m_notePattern;
-    m_timeSignature = bar.m_timeSignature;
+//    m_timeSignature = bar.m_timeSignature;
     return *this;
 }
 
@@ -41,7 +41,7 @@ int MusicalBar::notesCount()
 
 bool MusicalBar::addNote(quint16 position, MusicalNote note)
 {
-    if(position > m_notePattern.size()-1)
+    if(position > m_notePattern.size())
     {
         qWarning() << "MusicalBar.addNote(), position " << position << "is out of range!";
         return false;
@@ -52,7 +52,7 @@ bool MusicalBar::addNote(quint16 position, MusicalNote note)
 
 bool MusicalBar::addNotes(quint16 position, quint16 count, MusicalNote note)
 {
-    if(position > m_notePattern.size()-1)
+    if(position > m_notePattern.size())
     {
         qWarning() << "MusicalBar.addNotes() position " << position << "is out of range!";
         return false;
@@ -63,7 +63,7 @@ bool MusicalBar::addNotes(quint16 position, quint16 count, MusicalNote note)
 
 bool MusicalBar::addNotes(quint16 position, std::vector<MusicalNote> newNotePattern)
 {
-    if(position > m_notePattern.size()-1)
+    if(position > m_notePattern.size())
     {
         qWarning() << "MusicalBar.addNotes(), position " << position <<"is out of range!";
         return false;
@@ -138,7 +138,7 @@ bool MusicalBar::removeNote(quint16 position)
 
 bool MusicalBar::removeNotes(quint16 position, quint16 count)
 {
-    if(position+count-1 > m_notePattern.size()-1)
+    if(position+count-1 > static_cast<quint16>(m_notePattern.size()-1))
     {
         qWarning() << "MusicalBar.removeNotes(), start position " << position << ", end position " << position+count <<"is out of range!";
         return false;
@@ -168,15 +168,15 @@ MusicalNote MusicalBar::noteQMLAt(quint16 position)
     return m_notePattern.at(position);
 }
 
-const std::pair<quint8, MusicalTypes::NoteType> &MusicalBar::timeSignature() const
-{
-    return m_timeSignature;
-}
+//const std::pair<quint8, quint8> &MusicalBar::timeSignature() const
+//{
+//    return m_timeSignature;
+//}
 
-void MusicalBar::setTimeSignature(const std::pair<quint8, MusicalTypes::NoteType> &newTimeSignature)
-{
-    m_timeSignature = newTimeSignature;
-}
+//void MusicalBar::setTimeSignature(const std::pair<quint8, quint8> &newTimeSignature)
+//{
+//    m_timeSignature = newTimeSignature;
+//}
 
 const std::vector<MusicalNote> &MusicalBar::notePattern() const
 {

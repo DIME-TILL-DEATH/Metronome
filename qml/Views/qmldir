@@ -1,7 +1,9 @@
 module Views
 NoteView             1.0 NoteViewer/NoteView.qml
+NoteButton            1.0 NoteViewer/NoteButton.qml
 NoteImage            1.0 NoteViewer/NoteImage.qml
 PopupEditBarMenu     1.0 NoteViewer/PopupEditBarMenu.qml
 BarView              1.0 BarView.qml
+NoteButtonView       1.0 NoteButtonView.qml
 PatternView          1.0 PatternView.qml
 MetronomeButtonsView 1.0 MetronomeButtonsView.qml

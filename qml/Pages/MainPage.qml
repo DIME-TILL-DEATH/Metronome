@@ -6,6 +6,8 @@ import Base 1.0
 import StyleSettings 1.0
 import ResourceProvider 1.0
 
+import "../Functions.js" as Functions
+
 Page {
     id: _page
 
@@ -21,8 +23,10 @@ Page {
 
         radius: 5
 
-        border.color: "white"
-        border.width: 1
+        border{
+            color: "white"
+            width: 1
+        }
 
         gradient: Gradient{
             GradientStop{ position: 0.0; color: "skyblue"}
@@ -34,15 +38,13 @@ Page {
             width: parent.width / 10
             height: parent.height
 
-
-            icon.source: Resources.interfaceElements.menuIcon
-            icon.height: parent.height * 0.4
-            icon.width: parent.height * 0.4
-
-            onClicked: {
-                // working, but disabled for future use
-//                 _page.SwipeView.view.incrementCurrentIndex()
+            icon{
+                source: Resources.interfaceElements.menuIcon
+                height: parent.height * 0.4
+                width: parent.height * 0.4
             }
+
+            onClicked: { _swipeView.pop() }
         }
 
         Text {
@@ -73,4 +75,11 @@ Page {
 
         }
     }
+
+//    Component.onCompleted:
+//    {
+//        // даёт warning при старте, тк компонент-наследник ещё не создан
+//        Functions.setNoteFlatIndex(_patternview1.patternViewer)
+//        Functions.setNoteFlatIndex(_patternview2.patternViewer)
+//    }
 }

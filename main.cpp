@@ -14,7 +14,12 @@
 #include "musicalnote.h"
 #include "musicalbar.h"
 
+#include "patterneditor.h"
+
 #include "metronome.h"
+
+// for build without librarys
+#define WITH_MINIAUDIO 1
 
 int main(int argc, char *argv[])
 {
@@ -26,14 +31,18 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 //------------------------------------------------------------------
     Metronome& metronome{Metronome::instance()}; // Singletone
+    PatternEditor editor;
+
     engine.rootContext()->setContextProperty("Metronome", &metronome);
+    engine.rootContext()->setContextProperty("PatternEditor", &editor);
     engine.rootContext()->setContextProperty("mainPattern", &metronome.pattern(0));
     engine.rootContext()->setContextProperty("secondaryPattern", &metronome.pattern(1));
 
-//    MusicalPatternModel::registerMe("CoreApplicationModule");
-
     qRegisterMetaType<MusicalNote>("MusicalNote");
     qRegisterMetaType<MusicalBar>("MusicalBar");
+    qRegisterMetaType<MusicalTypes::MetronomeEvents>("MetronomeEvents");
+    qRegisterMetaType<TimingMap>("TimingMap");
+
 //---------------------------------------------------------------------
     engine.addImportPath(":/qml");
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));

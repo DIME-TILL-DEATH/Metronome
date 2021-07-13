@@ -33,6 +33,7 @@ public:
     const std::vector<MusicalBar> &barPattern() const;
 
     std::vector<MusicalNote> notePattern();
+    std::vector<MusicalBar> barPattern();
     quint16 barsCount();
 private:
     std::vector<MusicalBar> m_barPattern;

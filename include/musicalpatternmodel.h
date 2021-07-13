@@ -26,7 +26,7 @@ public:
 
     bool addBar(const MusicalBar &newBar, quint16 barIndex);
     bool removeBar(quint16 barIndex);
-
+    void updateModel();
 private:
     MusicalPattern& m_barPattern;
     quint16 m_selectedBarIndex{0};
