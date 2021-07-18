@@ -9,28 +9,23 @@ import StyleSettings 1.0
 Item {
     id: root
 
-//    property var flatteredIndex
-
     signal noteViewClicked(index: int)
 
 //    opacity: _delegateArea.pressed ? 0.5 : 1
 
     state: "base"
 
-//    state: ((flatteredIndex === Metronome.activeNoteIndex) & (!Metronome.isMetronomePlaying)) ?
-//              "selected" : "base"
+    MouseArea{
+        id: _delegateArea
 
-//    MouseArea{
-//        id: _delegateArea
+        anchors.fill: root
+//        z: -15
+        propagateComposedEvents: true
 
-//        anchors.fill: root
-////        z: -15
-//        propagateComposedEvents: true
-
-//        onClicked: {
-//            root.noteViewClicked(index)
-//        }
-//    }
+        onClicked: {
+            root.noteViewClicked(index)
+        }
+    }
 
     ColumnLayout{
         anchors.fill: root

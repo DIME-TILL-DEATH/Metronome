@@ -1,17 +1,3 @@
-//function setNoteFlatIndex(listView)
-//{
-//    var notePosition = 0;
-
-//    for(var barIndex = 0; barIndex < listView.count; barIndex++)
-//    {
-//        for(var noteInBar = 0; noteInBar < listView.itemAtIndex(barIndex).barView.count; noteInBar++)
-//        {
-//            listView.itemAtIndex(barIndex).barView.itemAtIndex(noteInBar).flatteredIndex = notePosition
-//            notePosition++
-//        }
-//    }
-//}
-
 function getMenuWidthByItems(menu) {
     var result = 0;
     var padding = 0;

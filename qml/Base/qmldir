@@ -3,4 +3,5 @@ AnimatedGradient    1.0 AnimatedGradient.qml
 BaseControlButton   1.0 BaseControlButton.qml
 BaseSpinBox         1.0 BaseSpinBox.qml
 HighlightRectangle  1.0 HighlightRectangle.qml
+Fader               1.0 Fader.qml
 

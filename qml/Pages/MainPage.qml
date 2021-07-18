@@ -62,11 +62,17 @@ Page {
 
         PatternView{
             id: _patternview1
+
+            height: parent.height*0.25
+
             patternModel: mainPattern
         }
 
         PatternView{
             id: _patternview2
+
+            height: parent.height*0.25
+
             patternModel: Metronome.pattern(1)
         }
 
@@ -74,12 +80,9 @@ Page {
             id: _metronomeButtonsView
 
         }
-    }
 
-//    Component.onCompleted:
-//    {
-//        // даёт warning при старте, тк компонент-наследник ещё не создан
-//        Functions.setNoteFlatIndex(_patternview1.patternViewer)
-//        Functions.setNoteFlatIndex(_patternview2.patternViewer)
-//    }
+        FadersView{
+
+        }
+    }
 }

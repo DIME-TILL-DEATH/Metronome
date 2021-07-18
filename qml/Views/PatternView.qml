@@ -18,12 +18,13 @@ Item {
     property alias patternViewer : _listView
 
     width: parent.width
-    height: parent.height*0.3
 
     Column{
         id: column
 
-        spacing: 5
+        spacing: height/50
+        padding: height/50
+
         anchors.fill: parent
         topPadding: 10
 
@@ -57,7 +58,7 @@ Item {
             boundsBehavior: Flickable.StopAtBounds
 
             width: _rootRectangle.width
-            height: _rootRectangle.height*0.45
+            height: _rootRectangle.height*0.5
 
             model: patternModel
 
@@ -74,6 +75,8 @@ Item {
 
             delegate: BarView{
                 height: _listView.height
+
+
 
 //                opacity: _barArea.pressed  ? 0.5 : 1
 //                MouseArea{

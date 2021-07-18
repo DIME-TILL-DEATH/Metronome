@@ -57,7 +57,7 @@ Page {
     //-----------------------------------------------------------
     property int noteWidth: 50
     property int selectedNote: 0
-    property var bar : PatternEditor.createBar()
+    property var bar : (PatternEditor !== null) ? PatternEditor.createBar() : 0
     property int editingBarIndex: 0
 
     Component.onCompleted: {
@@ -70,8 +70,8 @@ Page {
     Column{
         anchors.fill: parent
 
-        topPadding: parent.height/20
-        spacing: parent.height/20
+        topPadding: parent.height/40
+        spacing: parent.height/40
 
         BarView {
             id: _newBarView
@@ -129,8 +129,14 @@ Page {
 
             onNoteButtonInGridClicked:
             {
+                console.log(Metronome.eventVolumes["Click"])
+
                 var prevSelection =_newBarView.barView.currentIndex
                 bar.addNote(prevSelection+1, PatternEditor.noteByName(noteType))
+                // переделать создание модели в QML для нот
+                // на property хранящее массив нот в такте,
+                // или функцию возвращающую этот массив
+                // или на роль
                 _model.clear()
                 for(var noteIndex=0; noteIndex < bar.notesCount(); noteIndex++)
                 {

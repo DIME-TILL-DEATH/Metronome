@@ -131,7 +131,8 @@
         <file>qml/Views/NoteViewer/NoteButton.qml</file>
         <file>qml/Views/NoteButtonView.qml</file>
         <file>qml/Base/HighlightRectangle.qml</file>
-        <file>qml/defaultpattern.json</file>
         <file>qml/metronomesounds.json</file>
+        <file>qml/Base/Fader.qml</file>
+        <file>qml/Views/FadersView.qml</file>
     </qresource>
 </RCC>

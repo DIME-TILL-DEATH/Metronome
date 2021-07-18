@@ -63,8 +63,8 @@ namespace MusicalTypes
     static QHash<QString, MetronomeEvents> metronomeEventsNames
     {
         {"Click",         MetronomeEvents::MetronomeClick},
-        {"AccentedClick", MetronomeEvents::MetronomeAccentedClick},
-        {"PatternClick",  MetronomeEvents::PatternClick}
+        {"Accented Click", MetronomeEvents::MetronomeAccentedClick},
+        {"Pattern Click",  MetronomeEvents::PatternClick}
     };
 }
 

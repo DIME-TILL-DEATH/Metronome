@@ -1,5 +1,5 @@
 {
     "Click" : "://Sounds/Metronomes/metronome.wav",
-    "AccentedClick" : "://Sounds/Metronomes/metronomeAcc.wav",
-    "PatternClick" : "://Sounds/Metronomes/electric.wav"    
+    "Accented Click" : "://Sounds/Metronomes/metronomeAcc.wav",
+    "Pattern Click" : "://Sounds/Metronomes/electric.wav"
 }

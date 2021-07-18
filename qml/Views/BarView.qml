@@ -40,11 +40,16 @@ Item {
         width: _root.width
         height: _root.height
 
+        anchors{
+            horizontalCenter: _root.horizontalCenter
+        }
+
         interactive: false
 
         model: _model
 
         currentIndex: Metronome.activeNoteIndex
+
         highlight: HighlightRectangle{
             visible: (index === Metronome.activeBarIndex)
         }
@@ -53,8 +58,11 @@ Item {
 
         delegate: NoteView{
             id: _note
+
             width: noteWidth
             height: _barView.height
+
+            y: height/10
 
             Component.onCompleted: {
                 noteViewClicked.connect(_root.noteViewClicked)
@@ -62,6 +70,8 @@ Item {
         }
 
         header: Item{
+            y: parent.height/10
+
             Text{
                 anchors{ left: _barLineStart.right
                          leftMargin: _barLineStart.width
@@ -81,6 +91,8 @@ Item {
 
         footer: Rectangle{
             id: _barLineStop
+
+            y: parent.height/10
 
             width: barLinesWidth; height: noteWidth*1.75
             color: Style.imagesColorOverlay

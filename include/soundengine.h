@@ -20,6 +20,9 @@ public:
     explicit SoundEngine(QObject *parent = nullptr);
     ~SoundEngine();
 
+    const QHash<MusicalTypes::MetronomeEvents, double> &volumesMap() const;
+    void setVolumesMap(const QHash<MusicalTypes::MetronomeEvents, double> &newVolumesMap);
+
 public slots:
     void playMetronomeSound(quint16 barIndex, quint16 noteIndex, MusicalTypes::MetronomeEvents event);
 
@@ -35,6 +38,8 @@ private:
         {MusicalTypes::MetronomeEvents::MetronomeAccentedClick, {}},
         {MusicalTypes::MetronomeEvents::PatternClick, {}}
     };
+
+    QHash<MusicalTypes::MetronomeEvents, double> m_volumesMap;
 
     QElapsedTimer elapsedTimer;
 };

@@ -13,10 +13,11 @@ MusicalPattern::MusicalPattern()
                                         {MusicalTypes::NoteType::Eight, "L", "F"}
                                     });
     MusicalBar tempBar3({
-                                        {MusicalTypes::NoteType::Whole, "", " "},
                                         {MusicalTypes::NoteType::Half, "", " "},
                                         {MusicalTypes::NoteType::Sixteenth, "", ""},
-                                        {MusicalTypes::NoteType::Thirty_second, "", " "},
+                                        {MusicalTypes::NoteType::Eight, "L", " "},
+                                        {MusicalTypes::NoteType::Sixteenth, "", ""},
+                                        {MusicalTypes::NoteType::Quarter, "R", " "}
                                     });
 
     m_barPattern = {

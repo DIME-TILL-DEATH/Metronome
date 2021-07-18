@@ -15,6 +15,8 @@ class Metronome : public QObject
     Q_PROPERTY(bool isMetronomePlaying READ isMetronomePlaying NOTIFY isMetronomePlayingChanged)
     Q_PROPERTY(quint16 activeNoteIndex READ activeNoteIndex NOTIFY activeNoteIndexChanged)
     Q_PROPERTY(quint16 activeBarIndex READ activeBarIndex NOTIFY activeNoteIndexChanged)
+
+    Q_PROPERTY(QMap<QString, QVariant> eventVolumes READ eventVolumes WRITE setEventVolumes NOTIFY eventVolumesChanged)
 public:
     static Metronome& instance();
 
@@ -27,6 +29,9 @@ public:
     // Methods for UI
     Q_INVOKABLE quint16 tempo();// переделать на property
     Q_INVOKABLE MusicalPatternModel &pattern(quint16 id=0);
+
+    QMap<QString, QVariant> eventVolumes();
+    void setEventVolumes(const QMap<QString, QVariant>& newEventVolumes);
 
     quint16 activeBarIndex() const;
 
@@ -46,14 +51,13 @@ private:
 
     QTimer practiceTimer;
 
-
-
 signals:
     void isMetronomePlayingChanged();
     void activeNoteIndexChanged();
 //    void setTimerIntervals(const std::vector<std::vector<quint16> >& patternTimeIntervals);
     void setTimerIntervals(const TimingMap& patternTimeIntervals);
     void startStopPlaying();
+    void eventVolumesChanged();
 
 public slots:
     // заменить на timerEvent, принимать id таймера у которого произошёл таймаут, в соотвтествии

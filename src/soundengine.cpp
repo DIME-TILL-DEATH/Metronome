@@ -33,6 +33,7 @@ SoundEngine::SoundEngine(QObject *parent) : QObject(parent)
                     QByteArray data = wavFile.readAll();
                     m_sounds[it.value()].loadMem(reinterpret_cast<const unsigned char*>(data.constData()), data.size(), true, true);
                     m_sounds[it.value()].setInaudibleBehavior(true, false);
+                    m_volumesMap.insert(it.value(), 1.0f);
                     wavFile.close();
                 }
             }
@@ -57,5 +58,16 @@ void SoundEngine::playMetronomeSound(quint16 barIndex, quint16 noteIndex, Musica
     Q_UNUSED(noteIndex)
 //    elapsedTimer.start();
 
-    m_engineSoloud.play(m_sounds[event]);
+    m_engineSoloud.play(m_sounds[event], m_volumesMap[event]);
 }
+
+const QHash<MusicalTypes::MetronomeEvents, double> &SoundEngine::volumesMap() const
+{
+    return m_volumesMap;
+}
+
+void SoundEngine::setVolumesMap(const QHash<MusicalTypes::MetronomeEvents, double> &newVolumesMap)
+{
+    m_volumesMap = newVolumesMap;
+}
+

@@ -7,3 +7,4 @@ BarView              1.0 BarView.qml
 NoteButtonView       1.0 NoteButtonView.qml
 PatternView          1.0 PatternView.qml
 MetronomeButtonsView 1.0 MetronomeButtonsView.qml
+FadersView           1.0 FadersView.qml
